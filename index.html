@@ -246,6 +246,7 @@ body.editing .editable:focus{outline:1px solid var(--pigment)}
       <a href="#skills">Skills</a>
       <a href="#study">Study</a>
       <a href="#work">Work</a>
+      <a href="lab.html">Lab</a>
       <a href="#contact">Contact</a>
     </div>
     <div class="nav-right">
@@ -535,7 +536,7 @@ var SEED = {
     headlineEm: 'full-stack & AI-agent',
     headlineB: ' developer.',
     lede: 'Builds and ships production apps, not course projects — two live products covering frontend, backend, cloud deploy, auth, payments, and applied AI.',
-    resumeUrl: '#'
+    resumeUrl: 'resume.pdf'
   },
   about: {
     bio: 'Third-year BCA (Cybersecurity) student at Sushant University who builds and ships production applications rather than course projects alone. Independently designed, built, and deployed two live full-stack products — an AI resume analyzer and an autonomous API-monitoring agent — owning everything end-to-end: architecture, security, and shipping to real users.',
@@ -634,7 +635,17 @@ function migrate(d){
   var base = deepClone(SEED);
   if(!d || typeof d !== 'object') return base;
   var out = base;
-  if(d.hero && typeof d.hero === 'object')     out.hero    = Object.assign(base.hero, d.hero);
+  if(d.hero && typeof d.hero === 'object'){
+    /* Read the seed value BEFORE the merge: Object.assign mutates base.hero,
+       so afterwards base.hero.resumeUrl is already the stored value and
+       comparing against it can never detect the stale placeholder. */
+    var seedResume = SEED.hero.resumeUrl;
+    out.hero = Object.assign(base.hero, d.hero);
+    /* A copy stored before resume.pdf existed still carries the '#'
+       placeholder, which would keep showing "Resume (soon)" forever.
+       Upgrade just that value; a real URL the user set is left alone. */
+    if(!out.hero.resumeUrl || out.hero.resumeUrl === '#') out.hero.resumeUrl = seedResume;
+  }
   if(d.contact && typeof d.contact === 'object') out.contact = Object.assign(base.contact, d.contact);
   if(d.about && typeof d.about === 'object'){
     out.about.bio = typeof d.about.bio === 'string' ? d.about.bio : base.about.bio;
@@ -1049,7 +1060,7 @@ $('#btnHero').addEventListener('click', function(){
     {key:'headlineEm', label:'Italic pigment phrase',  type:'text', value:h.headlineEm},
     {key:'headlineB',  label:'Headline after italic',  type:'text', value:h.headlineB},
     {key:'lede',       label:'Lede',            type:'textarea', rows:3, value:h.lede},
-    {key:'resumeUrl',  label:'Resume URL',      type:'text', value:h.resumeUrl, hint:'Leave as # until the file is hosted'}
+    {key:'resumeUrl',  label:'Resume URL',      type:'text', value:h.resumeUrl, hint:'Currently resume.pdf, served from the site root'}
   ], function(v){
     Object.keys(v).forEach(function(k){ h[k] = v[k]; });
     if(!h.line1) h.line1 = 'RAVI';

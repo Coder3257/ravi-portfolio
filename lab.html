@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab — Ravi Mahto · Interactive 3D Study</title>
+<meta name="description" content="Lab — an interactive 3D scene by Ravi Mahto, third-year BCA (Cybersecurity) student at Sushant University.">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" href="/favicon.png" sizes="512x512">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Azeret+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#E7E3DA;
+  --ground-2:#DCD7CB;
+  --ink:#1A1917;
+  --ink-2:#4A4741;
+  --muted:#6E6A61;
+  --pigment:#9B3418;
+  --hair:rgba(26,25,23,.16);
+  --nav-h:60px;
+  --serif:'Instrument Serif',Georgia,serif;
+  --mono:'Azeret Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box;border-radius:0}
+body{
+  margin:0;background:var(--ground);color:var(--ink);
+  font-family:var(--mono);font-size:12.5px;font-weight:400;line-height:1.65;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+h1{font-family:var(--serif);font-weight:400;letter-spacing:-.015em;line-height:1.02;margin:0}
+em{font-style:italic;color:var(--pigment)}
+a{color:inherit;text-decoration:none}
+p{margin:0}
+
+.lab{font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--muted)}
+
+/* ---------- BACK LINK ---------- */
+.back{position:fixed;top:0;left:0;z-index:40;height:var(--nav-h);display:flex;align-items:center;
+  gap:10px;padding:0 26px;pointer-events:auto;
+  font-size:10.5px;font-weight:500;letter-spacing:.17em;text-transform:uppercase;color:var(--ink-2);
+  background:rgba(231,227,218,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-right:1px solid var(--hair);border-bottom:1px solid var(--hair);
+  transition:color .16s}
+.back:hover{color:var(--pigment)}
+.back .arw{color:var(--pigment)}
+
+/* ---------- STAGE ---------- */
+.stage{position:relative;width:100%;height:100vh;overflow:hidden;isolation:isolate;background:var(--ground-2)}
+spline-viewer,.poster{display:block;width:100%;height:100vh}
+.poster{object-fit:cover}
+#poster{display:none}
+
+/* ---------- OVERLAY ---------- */
+.overlay{position:absolute;inset:0;z-index:20;pointer-events:none;
+  display:flex;align-items:flex-end;padding:0 40px 64px}
+.panel{max-width:44vw;min-width:290px;
+  background:rgba(231,227,218,.76);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-top:1px solid var(--hair);border-left:1px solid var(--pigment);padding:26px 28px}
+.eyebrow{font-size:10.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--pigment)}
+.overlay h1{font-size:clamp(30px,4vw,56px);margin-top:16px}
+.overlay .lede{font-family:var(--mono);font-size:12.5px;color:var(--ink-2);line-height:1.75;
+  margin-top:18px;max-width:44ch}
+.hint{position:absolute;right:40px;bottom:26px;z-index:20;pointer-events:none;
+  font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.hint b{color:var(--pigment);font-weight:500}
+.cred{position:absolute;left:40px;top:calc(var(--nav-h) + 22px);z-index:20;pointer-events:none;
+  font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+
+/* ---------- ENTRANCE (motion-gated) ---------- */
+.anim .rv{opacity:0;transform:translateY(20px);
+  transition:opacity .72s cubic-bezier(.22,.61,.36,1),transform .72s cubic-bezier(.22,.61,.36,1)}
+.anim .rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1!important;transform:none!important}}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:1080px){.panel{max-width:72vw}}
+@media (max-width:860px){
+  .overlay{padding:0 22px 40px}
+  .hint{right:22px}
+  .cred{left:22px}
+  .back{padding:0 18px}
+}
+@media (max-width:768px){
+  .panel{max-width:100%;min-width:0}
+  .hint{display:none}
+}
+</style>
+</head>
+<body>
+
+<a class="back" href="index.html"><span class="arw">&larr;</span> Back to Portfolio</a>
+
+<main class="stage">
+  <!-- Spline scene: loaded as a web component, no npm, no build step -->
+  <script type="module" src="https://unpkg.com/@splinetool/viewer@latest/build/spline-viewer.js"></script>
+  <spline-viewer id="scene" url="https://prod.spline.design/B95vvvBD7hxmoczH/scene.splinecode" style="width:100%;height:100vh;"></spline-viewer>
+
+  <!-- Mobile fallback: swapped in by matchMedia below to avoid WebGL cost on phones -->
+  <img id="poster" class="poster" src="/poster.jpg" alt="Static render of the Lab 3D scene" width="1600" height="900">
+
+  <div class="cred rv">Fig. 01 — Interactive scene, drag to orbit</div>
+
+  <div class="overlay">
+    <div class="panel">
+      <div class="eyebrow rv">Lab</div>
+      <h1 class="rv">Where things get built <em>before they get shipped</em>.</h1>
+      <p class="lede rv">A live 3D scene rather than a screenshot of one. Everything on the main portfolio is a finished product; this is the room upstream of that — real-time rendering, interaction, and the things that break first.</p>
+    </div>
+  </div>
+
+  <div class="hint rv">Drag to orbit · Scroll to zoom · <b>Live</b></div>
+</main>
+
+<script>
+'use strict';
+
+var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------------------------------------------------------
+   Mobile swap — Spline is a WebGL scene, so below 768px we
+   drop it entirely and show a static poster instead. The
+   <spline-viewer> element is REMOVED, not hidden, so the
+   scene never downloads or initialises on phones.
+   --------------------------------------------------------- */
+var small = window.matchMedia('(max-width: 767px)');
+
+function applyViewport(){
+  var scene  = document.getElementById('scene');
+  var poster = document.getElementById('poster');
+  if(small.matches){
+    if(scene && scene.parentNode) scene.parentNode.removeChild(scene);
+    poster.style.display = 'block';
+  }
+}
+applyViewport();
+
+/* Only ever downgrades. Going from narrow back to wide does not
+   re-inject the viewer, because the element is gone — a resize
+   past the breakpoint keeps the poster until the page reloads. */
+if(small.addEventListener) small.addEventListener('change', applyViewport);
+else if(small.addListener) small.addListener(applyViewport);
+
+/* ---------------------------------------------------------
+   Entrance reveal — the 3D scene itself is interactive
+   content and always renders. Only the overlay copy is
+   animated, and only when reduced motion is not requested.
+   Revealed on rAF and never observed, so a short viewport
+   cannot strand it invisible.
+   --------------------------------------------------------- */
+if(!reduced){
+  document.documentElement.classList.add('anim');
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      var els = document.querySelectorAll('.rv');
+      Array.prototype.forEach.call(els, function(el, i){
+        setTimeout(function(){ el.classList.add('in'); }, i * 70);
+      });
+    });
+  });
+}
+</script>
+</body>
+</html>
