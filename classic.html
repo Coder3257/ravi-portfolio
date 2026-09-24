@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ravi Mahto — Cybersecurity Student · Full-Stack &amp; AI-Agent Developer</title>
+<meta name="description" content="Ravi Mahto — third-year BCA (Cybersecurity) student at Sushant University. Builds and ships production full-stack and AI-agent applications.">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" href="/favicon.png" sizes="512x512">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Azeret+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#E7E3DA;
+  --ground-2:#DCD7CB;
+  --ink:#1A1917;
+  --ink-2:#4A4741;
+  --muted:#6E6A61;
+  --pigment:#9B3418;
+  --hair:rgba(26,25,23,.16);
+  --nav-h:60px;
+  --serif:'Instrument Serif',Georgia,serif;
+  --mono:'Azeret Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box;border-radius:0}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--ground);color:var(--ink);
+  font-family:var(--mono);font-size:12.5px;font-weight:400;line-height:1.65;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+h1,h2,h3,.serif{font-family:var(--serif);font-weight:400;letter-spacing:-.015em;line-height:1.02;margin:0}
+em,.it{font-style:italic;color:var(--pigment)}
+a{color:inherit;text-decoration:none}
+p{margin:0}
+button{font-family:var(--mono);cursor:pointer;background:none;border:0;color:inherit}
+input,textarea,select{font-family:var(--mono);font-size:12.5px;color:var(--ink);background:var(--ground);border:1px solid var(--hair);padding:9px 10px;width:100%}
+input:focus,textarea:focus,select:focus{outline:1px solid var(--pigment);border-color:var(--pigment)}
+
+.lab{font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.17em;text-transform:uppercase;color:var(--muted)}
+.lab-p{color:var(--pigment)}
+.body{font-family:var(--mono);font-size:12.5px;letter-spacing:0;color:var(--ink-2);line-height:1.75}
+.wrap{max-width:1360px;margin:0 auto;padding:0 40px}
+.hair{height:1px;background:var(--hair);border:0;margin:0}
+
+.btn{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--ink);padding:11px 20px;
+  font-size:10.5px;font-weight:500;letter-spacing:.17em;text-transform:uppercase;color:var(--ink);
+  transition:background .18s,color .18s,border-color .18s}
+.btn:hover{background:var(--ink);color:var(--ground)}
+.btn-p{border-color:var(--pigment);color:var(--pigment)}
+.btn-p:hover{background:var(--pigment);color:var(--ground)}
+.btn-s{padding:7px 13px;font-size:10px;letter-spacing:.15em;border-color:var(--hair);color:var(--ink-2)}
+.btn-s:hover{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+
+/* ---------- NAV ---------- */
+.nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:120;
+  background:rgba(231,227,218,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--hair)}
+.nav-in{max-width:1360px;margin:0 auto;padding:0 40px;height:100%;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.mark{font-family:var(--serif);font-size:19px;letter-spacing:-.015em;white-space:nowrap}
+.mark span{color:var(--pigment)}
+.nav-links{display:flex;align-items:center;gap:26px}
+.nav-links a{font-size:10.5px;font-weight:500;letter-spacing:.17em;text-transform:uppercase;color:var(--ink-2);
+  border-bottom:1px solid transparent;padding-bottom:2px;transition:color .16s,border-color .16s}
+.nav-links a:hover{color:var(--ink);border-bottom-color:var(--pigment)}
+.nav-right{display:flex;align-items:center;gap:14px}
+.edit-dot{width:6px;height:6px;background:var(--pigment);display:none}
+body.editing .edit-dot{display:block}
+body.editing .btn-edit{background:var(--pigment);color:var(--ground);border-color:var(--pigment)}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;min-height:calc(100vh - var(--nav-h));margin-top:var(--nav-h);
+  background:var(--ground-2);overflow:hidden;isolation:isolate;display:flex;align-items:center}
+.hero-in{position:relative;z-index:5;max-width:1360px;margin:0 auto;padding:70px 40px 110px;width:100%}
+.hero-copy{max-width:44vw;min-width:290px}
+.hero h1{font-size:clamp(30px,4vw,56px);line-height:1.04;margin:20px 0 0}
+.hero-lede{margin-top:22px;max-width:46ch}
+.hero-btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.hero-cap{position:absolute;left:40px;bottom:26px;z-index:6;font-size:10.5px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--muted)}
+.hero-cap b{color:var(--pigment);font-weight:500}
+
+.wm{position:absolute;right:40px;font-family:var(--serif);font-size:clamp(74px,17.5vw,258px);
+  line-height:.82;letter-spacing:-.03em;text-align:right;white-space:nowrap;color:var(--ink);
+  pointer-events:none;will-change:transform}
+.wm-1{top:8vh;z-index:8}
+.wm-2{top:calc(8vh + .82em);z-index:2;color:var(--ink)}
+.subject{position:absolute;right:11vw;bottom:0;z-index:5;height:min(72vh,600px);width:auto;
+  max-width:46vw;filter:drop-shadow(0 26px 40px rgba(26,25,23,.22));will-change:transform;pointer-events:none}
+
+/* ---------- SECTION SHELL ---------- */
+.sec{padding:120px 0;position:relative}
+.sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:14px}
+.sec-num{font-size:10.5px;letter-spacing:.17em;color:var(--pigment);font-weight:600}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.02fr);gap:64px;align-items:start}
+.sec h2{font-size:clamp(26px,3.2vw,44px)}
+.sec h3{font-size:clamp(19px,2vw,26px)}
+
+/* definition list */
+.dl{margin-top:34px;border-top:1px solid var(--hair)}
+.dl-row{display:grid;grid-template-columns:130px minmax(0,1fr) auto;gap:20px;align-items:baseline;
+  padding:14px 0;border-bottom:1px solid var(--hair)}
+.dl-row .k{font-size:10.5px;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:var(--pigment)}
+.dl-row .d{font-size:12.5px;color:var(--ink-2)}
+.dl-row .v{font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);text-align:right}
+.row-tools{display:none;gap:6px;justify-content:flex-end;padding:8px 0}
+body.editing .row-tools{display:flex}
+body.editing .dl-row{background:rgba(155,52,24,.035)}
+
+.draw{width:100%;height:auto;background:var(--ground);display:block}
+.draw-cap{margin-top:12px;font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+
+/* ---------- SKILLS ---------- */
+.skill-group{margin-top:44px}
+.sg-head{display:flex;align-items:baseline;gap:16px;padding-bottom:10px;border-bottom:1px solid var(--ink)}
+.sg-head .lab{color:var(--pigment);font-weight:600}
+.sk-row{display:grid;grid-template-columns:190px minmax(0,1fr) 140px;gap:20px;align-items:center;
+  padding:11px 0;border-bottom:1px solid var(--hair);cursor:pointer;transition:background .16s,opacity .16s}
+.sk-row:hover{background:rgba(26,25,23,.045)}
+.sk-row .sk-k{font-size:10.5px;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:var(--pigment)}
+.sk-row .sk-n{font-family:var(--serif);font-size:19px;letter-spacing:-.015em}
+.sk-row .sk-c{font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);text-align:right}
+.sk-row.on{background:rgba(155,52,24,.09)}
+.sk-row.on .sk-n{color:var(--pigment)}
+.sk-row.no-link{cursor:default}
+.filterbar{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:26px;padding:12px 0;
+  border-top:1px solid var(--pigment);border-bottom:1px solid var(--pigment)}
+.filterbar[hidden]{display:none}
+.filterbar .fb-t{font-size:10.5px;letter-spacing:.17em;text-transform:uppercase;color:var(--pigment);font-weight:600}
+
+/* ---------- PINNED STUDY ---------- */
+.study{height:340vh;position:relative;background:var(--ground-2)}
+.stage{position:sticky;top:var(--nav-h);height:calc(100vh - var(--nav-h));display:flex;flex-direction:column;
+  justify-content:center;overflow:hidden}
+.stage-in{max-width:1360px;margin:0 auto;padding:0 40px;width:100%}
+.stage-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:56px;align-items:center;margin-top:26px}
+.readouts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:30px;border-top:1px solid var(--hair)}
+.ro{padding:16px 18px 16px 0;border-right:1px solid var(--hair)}
+.ro:last-child{border-right:0}
+.ro .rv{font-family:var(--serif);font-size:clamp(26px,3.4vw,46px);letter-spacing:-.015em;line-height:1}
+.ro .rl{margin-top:8px;font-size:10px;letter-spacing:.17em;text-transform:uppercase;color:var(--muted)}
+.model{margin-top:20px;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);max-width:70ch}
+.model b{color:var(--pigment);font-weight:500}
+
+/* ---------- WORK TABLE ---------- */
+.tbl{width:100%;border-collapse:collapse;margin-top:34px}
+.tbl th{text-align:left;font-size:10.5px;font-weight:600;letter-spacing:.17em;text-transform:uppercase;
+  color:var(--muted);padding:0 18px 12px 0;border-bottom:1px solid var(--ink)}
+.tbl td{padding:24px 18px 24px 0;border-bottom:1px solid var(--hair);vertical-align:top;font-size:12.5px;color:var(--ink-2)}
+.tbl .pn{font-family:var(--serif);font-size:clamp(15px,1.5vw,21px);letter-spacing:-.015em;color:var(--ink)}
+.tbl .st{font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--pigment);font-weight:600;white-space:nowrap}
+.tbl tr.dim{opacity:.28}
+.tbl tr.hit td{background:rgba(155,52,24,.07)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.tag{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);border:1px solid var(--hair);padding:3px 8px}
+.tag.on{color:var(--pigment);border-color:var(--pigment)}
+.det{margin-top:12px;color:var(--muted);line-height:1.7}
+.mob-lab{display:none}
+
+/* ---------- CLOSE ---------- */
+.close{padding:120px 0 0;position:relative;overflow:hidden}
+.close h2{font-size:clamp(26px,3.6vw,50px);max-width:22ch}
+.close-btns{display:flex;flex-wrap:wrap;justify-content:space-between;gap:18px;margin-top:44px}
+.foot{margin-top:56px;border-top:1px solid var(--hair);padding:16px 0;display:flex;flex-wrap:wrap;
+  justify-content:space-between;gap:14px;font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.wm-foot{font-family:var(--serif);font-size:clamp(80px,20vw,300px);line-height:.8;letter-spacing:-.035em;
+  text-align:center;transform:translateY(.17em);white-space:nowrap;color:var(--ink);padding:0 40px}
+
+/* ---------- CONTACT ROWS ---------- */
+.ct{margin-top:34px;border-top:1px solid var(--hair)}
+.ct-row{display:grid;grid-template-columns:150px minmax(0,1fr) auto;gap:20px;align-items:baseline;
+  padding:14px 0;border-bottom:1px solid var(--hair)}
+.ct-row .k{font-size:10.5px;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:var(--pigment)}
+.ct-row .v{font-size:12.5px;color:var(--ink-2);word-break:break-word}
+.ct-row .v a:hover{color:var(--pigment);border-bottom:1px solid var(--pigment)}
+
+/* ---------- EDIT MODE ---------- */
+.adminbar{display:none;position:sticky;top:var(--nav-h);z-index:100;background:var(--ground);
+  border-top:1px solid var(--pigment);border-bottom:1px solid var(--pigment);padding:11px 0}
+body.editing .adminbar{display:block}
+.adminbar-in{max-width:1360px;margin:0 auto;padding:0 40px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.adminbar .t{font-size:10.5px;letter-spacing:.17em;text-transform:uppercase;color:var(--pigment);font-weight:600;margin-right:8px}
+.add-btn{display:none;margin-top:16px}
+body.editing .add-btn{display:inline-flex}
+.editable{outline:1px dashed transparent;transition:outline-color .15s}
+body.editing .editable{outline-color:var(--pigment);outline-offset:6px}
+body.editing .editable:focus{outline:1px solid var(--pigment)}
+
+.modal{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;padding:24px;
+  background:rgba(26,25,23,.42);backdrop-filter:blur(3px)}
+.modal.open{display:flex}
+.modal-box{background:var(--ground);border:1px solid var(--ink);width:min(660px,100%);max-height:86vh;overflow:auto;padding:30px}
+.modal-box h3{font-size:26px;margin-bottom:6px}
+.fld{margin-top:18px}
+.fld label{display:block;margin-bottom:7px}
+.modal-btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;justify-content:flex-end}
+.toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%);z-index:400;background:var(--ink);
+  color:var(--ground);padding:11px 18px;font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;
+  opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.show{opacity:1}
+
+/* ---------- REVEAL ---------- */
+.anim .rv-b{opacity:0;transform:translateY(20px);transition:opacity .72s cubic-bezier(.22,.61,.36,1),transform .72s cubic-bezier(.22,.61,.36,1)}
+.anim .rv-b.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv-b{opacity:1!important;transform:none!important}}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:1080px){
+  .two{grid-template-columns:1fr;gap:44px}
+  .stage-grid{grid-template-columns:1fr;gap:26px}
+  .hero-copy{max-width:78vw}
+  .subject{right:4vw;height:min(56vh,460px);max-width:60vw}
+}
+@media (max-width:860px){
+  .wrap,.nav-in,.stage-in,.adminbar-in{padding-left:22px;padding-right:22px}
+  .hero-cap{left:22px}
+  .wm{right:22px}
+  .nav-links{display:none}
+  .sec{padding:84px 0}
+  .hero-copy{max-width:100%}
+  .subject{opacity:.9;height:min(44vh,360px);right:-2vw}
+  .sk-row{grid-template-columns:1fr;gap:4px}
+  .sk-row .sk-c{text-align:left}
+  .dl-row,.ct-row{grid-template-columns:1fr;gap:5px}
+  .dl-row .v{text-align:left}
+  .readouts{grid-template-columns:1fr;border-top:0}
+  .ro{border-right:0;border-top:1px solid var(--hair);padding-right:0}
+  .study{height:300vh}
+  .tbl,.tbl tbody,.tbl tr,.tbl td{display:block;width:100%}
+  .tbl thead{display:none}
+  .tbl tr{border-bottom:1px solid var(--hair);padding:20px 0}
+  .tbl td{border-bottom:0;padding:5px 0;display:grid;grid-template-columns:96px minmax(0,1fr);gap:12px}
+  .mob-lab{display:block;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<nav class="nav">
+  <div class="nav-in">
+    <a href="#top" class="mark">Ravi Mahto<span>.</span></a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#study">Study</a>
+      <a href="#work">Work</a>
+      <a href="lab.html">Lab</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="nav-right">
+      <span class="edit-dot"></span>
+      <button class="btn btn-s btn-edit" id="editToggle">Edit Mode</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ================= ADMIN BAR ================= -->
+<div class="adminbar">
+  <div class="adminbar-in">
+    <span class="t">Edit Mode — data stored in localStorage</span>
+    <button class="btn btn-s" id="btnExport">Export JSON</button>
+    <button class="btn btn-s" id="btnImport">Import JSON</button>
+    <button class="btn btn-s" id="btnHero">Edit Hero</button>
+    <button class="btn btn-s" id="btnContact">Edit Contact</button>
+    <button class="btn btn-s" id="btnReset">Reset Defaults</button>
+    <input type="file" id="fileImport" accept="application/json,.json" hidden>
+  </div>
+</div>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="top">
+  <div class="wm wm-1" id="wm1">RAVI</div>
+
+  <svg class="subject" id="subject" width="520" height="700" viewBox="0 0 520 700" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Line drawing of a monitored server stack">
+    <!-- plinth -->
+    <path d="M60 660 H460 L430 690 H90 Z" fill="#DCD7CB" stroke="#1A1917" stroke-width="2"/>
+    <path d="M60 660 H460" stroke="#1A1917" stroke-width="2"/>
+    <!-- main slab -->
+    <rect x="110" y="150" width="300" height="510" fill="#DCD7CB" stroke="#1A1917" stroke-width="2.4"/>
+    <!-- side depth -->
+    <path d="M410 150 L452 118 V628 L410 660 Z" fill="#DCD7CB" stroke="#1A1917" stroke-width="2"/>
+    <path d="M110 150 L152 118 H452 L410 150 Z" fill="#DCD7CB" stroke="#1A1917" stroke-width="2"/>
+    <!-- rack bays -->
+    <rect x="134" y="176" width="252" height="66" stroke="#1A1917" stroke-width="1.4"/>
+    <rect x="134" y="258" width="252" height="66" stroke="#1A1917" stroke-width="1.4"/>
+    <rect x="134" y="340" width="252" height="66" stroke="#1A1917" stroke-width="1.4"/>
+    <rect x="134" y="422" width="252" height="66" stroke="#1A1917" stroke-width="1.4"/>
+    <!-- bay detail lines -->
+    <g stroke="rgba(26,25,23,.42)" stroke-width="1">
+      <path d="M150 200 H300"/><path d="M150 218 H262"/>
+      <path d="M150 282 H300"/><path d="M150 300 H240"/>
+      <path d="M150 364 H286"/><path d="M150 382 H320"/>
+      <path d="M150 446 H268"/><path d="M150 464 H304"/>
+    </g>
+    <!-- status markers (pigment, type/marker only) -->
+    <g fill="#9B3418">
+      <rect x="356" y="196" width="14" height="14"/>
+      <rect x="356" y="360" width="14" height="14"/>
+    </g>
+    <g stroke="#9B3418" stroke-width="1.6">
+      <rect x="356.8" y="278.8" width="12.4" height="12.4"/>
+      <rect x="356.8" y="442.8" width="12.4" height="12.4"/>
+    </g>
+    <!-- terminal panel -->
+    <rect x="134" y="504" width="252" height="128" stroke="#1A1917" stroke-width="1.6"/>
+    <g stroke="rgba(26,25,23,.5)" stroke-width="1.2">
+      <path d="M152 532 h12 l8 8 l-8 8"/>
+      <path d="M182 548 H300"/>
+      <path d="M152 578 h12 l8 8 l-8 8"/>
+      <path d="M182 594 H268"/>
+    </g>
+    <path d="M312 588 h20" stroke="#9B3418" stroke-width="3"/>
+    <!-- shield glyph, hairline construction -->
+    <path d="M260 26 L336 56 V104 C336 142 302 168 260 182 C218 168 184 142 184 104 V56 Z"
+          fill="#DCD7CB" stroke="#1A1917" stroke-width="2.4"/>
+    <path d="M226 104 l24 24 l46 -50" stroke="#9B3418" stroke-width="3.4" stroke-linecap="square"/>
+    <circle cx="260" cy="104" r="86" stroke="rgba(26,25,23,.16)" stroke-width="1"/>
+    <path d="M260 8 V196" stroke="rgba(26,25,23,.16)" stroke-width="1"/>
+    <path d="M166 104 H354" stroke="rgba(26,25,23,.16)" stroke-width="1"/>
+  </svg>
+
+  <div class="wm wm-2" id="wm2">MAHTO</div>
+
+  <div class="hero-in">
+    <div class="hero-copy">
+      <div class="lab rv-b" id="heroEyebrow">Ravi Mahto — Portfolio 2026</div>
+      <h1 class="rv-b" id="heroHeadline"></h1>
+      <p class="body hero-lede rv-b" id="heroLede"></p>
+      <div class="hero-btns rv-b">
+        <a class="btn" href="#work">View Work</a>
+        <a class="btn btn-p" href="#" id="resumeLink" target="_blank" rel="noopener">Resume</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-cap">Sushant University · BCA Cybersecurity · <b>3rd Year</b></div>
+</header>
+
+<!-- ================= ABOUT ================= -->
+<section class="sec" id="about">
+  <div class="wrap">
+    <div class="two">
+      <div>
+        <div class="sec-head rv-b"><span class="sec-num">01</span><span class="lab">About</span></div>
+        <h2 class="rv-b">Ships <em>production software</em>, not coursework.</h2>
+        <p class="body rv-b" id="aboutBio" style="margin-top:24px;max-width:56ch"></p>
+        <div class="dl rv-b" id="aboutFacts"></div>
+        <button class="btn btn-s add-btn" id="addFact">+ Add Fact Row</button>
+      </div>
+      <div class="rv-b">
+        <svg class="draw" viewBox="0 0 560 400" xmlns="http://www.w3.org/2000/svg" aria-label="To-scale timeline of a three-year BCA degree">
+          <!-- construction hairlines -->
+          <g stroke="rgba(26,25,23,.16)" stroke-width="1">
+            <path d="M40 60 V340"/><path d="M520 60 V340"/>
+            <path d="M40 80 H520"/><path d="M40 320 H520"/>
+          </g>
+          <!-- axis: 360px = 36 months, 10px = 1 month -->
+          <path d="M40 240 H400" stroke="#1A1917" stroke-width="2.4"/>
+          <!-- semester ticks every 6 months = 60px -->
+          <g stroke="#1A1917" stroke-width="1.4">
+            <path d="M40 240 V226"/><path d="M100 240 V226"/><path d="M160 240 V226"/>
+            <path d="M220 240 V226"/><path d="M280 240 V226"/><path d="M340 240 V226"/>
+            <path d="M400 240 V226"/>
+          </g>
+          <!-- year brackets -->
+          <g stroke="rgba(26,25,23,.16)" stroke-width="1">
+            <path d="M40 262 V272 H160 V262"/><path d="M160 262 V272 H280 V262"/><path d="M280 262 V272 H400 V262"/>
+          </g>
+          <text x="100" y="290" text-anchor="middle" font-family="Azeret Mono,monospace" font-size="10.5" letter-spacing="1.6" fill="#6E6A61">YEAR 1</text>
+          <text x="220" y="290" text-anchor="middle" font-family="Azeret Mono,monospace" font-size="10.5" letter-spacing="1.6" fill="#6E6A61">YEAR 2</text>
+          <text x="340" y="290" text-anchor="middle" font-family="Azeret Mono,monospace" font-size="10.5" letter-spacing="1.6" fill="#9B3418">YEAR 3</text>
+          <!-- pigment marker at month 24 = start of year 3 -->
+          <path d="M280 240 V196" stroke="#9B3418" stroke-width="1.4"/>
+          <rect x="274" y="190" width="12" height="12" fill="#9B3418"/>
+          <!-- leader out to label -->
+          <path d="M286 196 H452" stroke="rgba(26,25,23,.16)" stroke-width="1"/>
+          <text x="452" y="192" font-family="Azeret Mono,monospace" font-size="10.5" letter-spacing="1.6" fill="#1A1917">CURRENT</text>
+          <text x="452" y="208" font-family="Azeret Mono,monospace" font-size="10.5" letter-spacing="1.6" fill="#6E6A61">SEM 05</text>
+          <!-- shipped products plotted on same axis -->
+          <path d="M232 240 V148" stroke="rgba(26,25,23,.16)" stroke-width="1"/>
+          <rect x="228" y="144" width="8" height="8" fill="#9B3418"/>
+          <path d="M236 148 H452" stroke="rgba(26,25,23,.16)" stroke-width="1"/>
+          <text x="452" y="144" font-family="Azeret Mono,monospace" font-size="10.5" letter-spacing="1.6" fill="#1A1917">ATS KILLER</text>
+          <text x="452" y="160" font-family="Azeret Mono,monospace" font-size="10.5" letter-spacing="1.6" fill="#6E6A61">LIVE</text>
+          <path d="M310 240 V108" stroke="rgba(26,25,23,.16)" stroke-width="1"/>
+          <rect x="306" y="104" width="8" height="8" fill="#9B3418"/>
+          <path d="M314 108 H452" stroke="rgba(26,25,23,.16)" stroke-width="1"/>
+          <text x="452" y="104" font-family="Azeret Mono,monospace" font-size="10.5" letter-spacing="1.6" fill="#1A1917">API-SENTINEL</text>
+          <text x="452" y="120" font-family="Azeret Mono,monospace" font-size="10.5" letter-spacing="1.6" fill="#6E6A61">LIVE</text>
+          <!-- scale bar -->
+          <path d="M40 340 H100" stroke="#1A1917" stroke-width="1.6"/>
+          <path d="M40 335 V345" stroke="#1A1917" stroke-width="1.6"/>
+          <path d="M100 335 V345" stroke="#1A1917" stroke-width="1.6"/>
+          <text x="108" y="345" font-family="Azeret Mono,monospace" font-size="10.5" letter-spacing="1.6" fill="#6E6A61">60PX = 6 MONTHS = 1 SEMESTER</text>
+          <text x="40" y="48" font-family="Azeret Mono,monospace" font-size="10.5" letter-spacing="1.6" fill="#9B3418">FIG. 01 — DEGREE TIMELINE, DRAWN TO SCALE</text>
+        </svg>
+        <div class="draw-cap">Fig. 01 — 3-year BCA plotted at 10px = 1 month. Marker at month 24 = start of year 3.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SKILLS ================= -->
+<section class="sec" id="skills" style="background:var(--ground-2)">
+  <div class="wrap">
+    <div class="sec-head rv-b"><span class="sec-num">02</span><span class="lab">Material &amp; Practice</span></div>
+    <div class="two rv-b" style="align-items:end">
+      <h2>Tools held long enough to have <em>opinions</em> about them.</h2>
+      <p class="body">Click any skill to filter the work table below — the mapping is the real stack of each shipped product, not a keyword list. Categories: CORE is used in production, TOOLING is daily instrumentation, LEARNING is current coursework.</p>
+    </div>
+
+    <div class="filterbar" id="filterBar" hidden>
+      <span class="fb-t">Filtering work by</span>
+      <span class="body" id="filterName" style="color:var(--ink)"></span>
+      <span class="lab" id="filterCount"></span>
+      <button class="btn btn-s" id="clearFilter">Clear Filter</button>
+    </div>
+
+    <div id="skillsRoot"></div>
+    <button class="btn btn-s add-btn" id="addSkill">+ Add Skill</button>
+  </div>
+</section>
+
+<!-- ================= PINNED STUDY ================= -->
+<section class="study" id="study">
+  <div class="stage">
+    <div class="stage-in">
+      <div class="sec-head"><span class="sec-num">03</span><span class="lab">Computed Study — Bundle Reduction</span></div>
+      <h2>Code-splitting, <em>measured</em>.</h2>
+      <div class="stage-grid">
+        <div>
+          <p class="body">ATS Killer shipped an 806 KB initial bundle. Route-level code-splitting and lazy chunking took the entry bundle to 68 KB. Scroll drives the same interpolation that prints the numbers — the arc and the readouts are one calculation.</p>
+          <div class="model">Model — <b>B(p) = 806 − 738p</b> KB, p = scroll progress through this section. Transfer time at a stated <b>400 KB/s</b>. Arc angle <b>θ = 90° × p</b>. Bar length is B(p)/806 of full scale.</div>
+        </div>
+        <div>
+          <svg id="studySvg" viewBox="0 0 460 300" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" aria-label="Arc and bar diagram of bundle size reduction">
+            <g stroke="rgba(26,25,23,.16)" stroke-width="1">
+              <path d="M40 260 H420"/><path d="M40 20 V260"/><path d="M40 100 H420"/>
+            </g>
+            <!-- arc path radius 160 centre (40,260) -->
+            <path d="M200 260 A160 160 0 0 0 40 100" stroke="rgba(26,25,23,.16)" stroke-width="1" fill="none"/>
+            <path id="arcTrail" d="M200 260" stroke="#9B3418" stroke-width="2" fill="none"/>
+            <line id="arcSpoke" x1="40" y1="260" x2="200" y2="260" stroke="rgba(26,25,23,.16)" stroke-width="1"/>
+            <rect id="arcMarker" x="194" y="254" width="12" height="12" fill="#9B3418"/>
+            <!-- bar to scale -->
+            <path d="M40 288 H340" stroke="rgba(26,25,23,.16)" stroke-width="1"/>
+            <line id="bar" x1="40" y1="288" x2="340" y2="288" stroke="#1A1917" stroke-width="3"/>
+            <text x="356" y="292" font-family="Azeret Mono,monospace" font-size="10.5" letter-spacing="1.6" fill="#6E6A61">SCALE 300PX = 806KB</text>
+            <text id="thetaLabel" x="240" y="34" font-family="Azeret Mono,monospace" font-size="10.5" letter-spacing="1.6" fill="#9B3418">θ = 0.0°</text>
+          </svg>
+        </div>
+      </div>
+      <div class="readouts">
+        <div class="ro"><div class="rv" id="roBundle">806 KB</div><div class="rl">Entry Bundle B(p)</div></div>
+        <div class="ro"><div class="rv" id="roCut">0.0 %</div><div class="rl">Reduction from 806 KB</div></div>
+        <div class="ro"><div class="rv" id="roTime">2.02 s</div><div class="rl">Transfer @ 400 KB/s</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WORK ================= -->
+<section class="sec" id="work">
+  <div class="wrap">
+    <div class="sec-head rv-b"><span class="sec-num">04</span><span class="lab">Work</span></div>
+    <div class="two rv-b" style="align-items:end">
+      <h2>Two products, <em>both live</em>.</h2>
+      <p class="body">Owned end-to-end: architecture, auth, payments, deploy, and the security model. Links go to the running deployments.</p>
+    </div>
+    <table class="tbl rv-b">
+      <thead>
+        <tr>
+          <th style="width:20%">Project</th>
+          <th style="width:10%">Status</th>
+          <th style="width:22%">Stack</th>
+          <th style="width:38%">What it does</th>
+          <th style="width:10%">Link</th>
+        </tr>
+      </thead>
+      <tbody id="projRoot"></tbody>
+    </table>
+    <button class="btn btn-s add-btn" id="addProj">+ Add Project</button>
+  </div>
+</section>
+
+<!-- ================= CLOSE / CONTACT ================= -->
+<section class="close" id="contact">
+  <div class="wrap">
+    <div class="sec-head rv-b"><span class="sec-num">05</span><span class="lab">Contact</span></div>
+    <h2 class="rv-b">Open to internships and <em>security-adjacent</em> engineering work.</h2>
+    <div class="ct rv-b" id="contactRoot"></div>
+    <div class="close-btns rv-b">
+      <a class="btn btn-p" id="mailBtn" href="#">Email Ravi</a>
+      <a class="btn" id="ghBtn" href="#" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <div class="foot">
+      <span>All data on this page is self-reported and verifiable at the linked deployments.</span>
+      <span>© <span id="yr"></span> Ravi Mahto</span>
+    </div>
+  </div>
+  <div class="wm-foot">RAVI MAHTO</div>
+</section>
+
+<!-- ================= MODAL ================= -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <h3 id="modalTitle">Edit</h3>
+    <div class="lab" id="modalSub"></div>
+    <div id="modalFields"></div>
+    <div class="modal-btns">
+      <button class="btn btn-s" id="modalCancel">Cancel</button>
+      <button class="btn btn-p" id="modalSave">Save</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+
+/* =========================================================
+   1. SEED DATA
+   ========================================================= */
+var STORE_KEY = 'ravi-portfolio-v1';
+
+function uid(){ return 'x' + Math.random().toString(36).slice(2,9); }
+
+var SEED = {
+  version: 1,
+  hero: {
+    line1: 'RAVI',
+    line2: 'MAHTO',
+    eyebrow: 'Ravi Mahto — Portfolio 2026',
+    headlineA: 'Cybersecurity student, ',
+    headlineEm: 'full-stack & AI-agent',
+    headlineB: ' developer.',
+    lede: 'Builds and ships production apps, not course projects — two live products covering frontend, backend, cloud deploy, auth, payments, and applied AI.',
+    resumeUrl: 'resume.pdf'
+  },
+  about: {
+    bio: 'Third-year BCA (Cybersecurity) student at Sushant University who builds and ships production applications rather than course projects alone. Independently designed, built, and deployed two live full-stack products — an AI resume analyzer and an autonomous API-monitoring agent — owning everything end-to-end: architecture, security, and shipping to real users.',
+    facts: [
+      { id: uid(), key: 'Stack',   desc: 'React / Next.js / Supabase / TypeScript', val: 'Primary' },
+      { id: uid(), key: 'Focus',   desc: 'Cybersecurity + AI agents',               val: 'Direction' },
+      { id: uid(), key: 'Current', desc: 'Building api-sentinel',                   val: 'In Progress' },
+      { id: uid(), key: 'College', desc: 'Sushant University, BCA Cybersecurity, 3rd year', val: '2026' }
+    ]
+  },
+  skills: [
+    { id: uid(), cat: 'CORE', group: 'Languages',       name: 'JavaScript / TypeScript' },
+    { id: uid(), cat: 'CORE', group: 'Languages',       name: 'Python' },
+    { id: uid(), cat: 'CORE', group: 'Languages',       name: 'SQL' },
+    { id: uid(), cat: 'CORE', group: 'Frontend',        name: 'React' },
+    { id: uid(), cat: 'CORE', group: 'Frontend',        name: 'Vite' },
+    { id: uid(), cat: 'CORE', group: 'Frontend',        name: 'Next.js' },
+    { id: uid(), cat: 'CORE', group: 'Frontend',        name: 'Zustand' },
+    { id: uid(), cat: 'CORE', group: 'Backend & Infra', name: 'Node.js' },
+    { id: uid(), cat: 'CORE', group: 'Backend & Infra', name: 'Vercel Serverless Functions' },
+    { id: uid(), cat: 'CORE', group: 'Backend & Infra', name: 'Supabase (Postgres, Auth, RLS)' },
+    { id: uid(), cat: 'CORE', group: 'Backend & Infra', name: 'Vercel Cron' },
+    { id: uid(), cat: 'CORE', group: 'Security',        name: 'NextAuth / OAuth' },
+    { id: uid(), cat: 'CORE', group: 'Security',        name: 'Server-side authorization' },
+    { id: uid(), cat: 'CORE', group: 'Security',        name: 'Webhook signature verification' },
+    { id: uid(), cat: 'CORE', group: 'Security',        name: 'Row-Level Security' },
+    { id: uid(), cat: 'CORE', group: 'Security',        name: 'Rate limiting' },
+    { id: uid(), cat: 'CORE', group: 'AI / APIs',       name: 'Claude API' },
+    { id: uid(), cat: 'CORE', group: 'AI / APIs',       name: 'Gemini API' },
+    { id: uid(), cat: 'CORE', group: 'AI / APIs',       name: 'GitHub App / REST API integration' },
+    { id: uid(), cat: 'CORE', group: 'AI / APIs',       name: 'Structured-agent prompt design' },
+    { id: uid(), cat: 'TOOLING', group: 'Tooling',      name: 'Git / GitHub' },
+    { id: uid(), cat: 'TOOLING', group: 'Tooling',      name: 'GitHub Apps & Webhooks' },
+    { id: uid(), cat: 'TOOLING', group: 'Tooling',      name: 'Razorpay' },
+    { id: uid(), cat: 'TOOLING', group: 'Tooling',      name: 'Resend' },
+    { id: uid(), cat: 'TOOLING', group: 'Tooling',      name: 'CI / build tooling' },
+    { id: uid(), cat: 'LEARNING', group: 'BCA Cybersecurity coursework', name: 'Emerging Technologies' },
+    { id: uid(), cat: 'LEARNING', group: 'BCA Cybersecurity coursework', name: 'Python Basics' },
+    { id: uid(), cat: 'LEARNING', group: 'BCA Cybersecurity coursework', name: 'Data Structures & Algorithms I' },
+    { id: uid(), cat: 'LEARNING', group: 'BCA Cybersecurity coursework', name: 'Data Structures & Algorithms II' },
+    { id: uid(), cat: 'LEARNING', group: 'BCA Cybersecurity coursework', name: 'Mathematics' },
+    { id: uid(), cat: 'LEARNING', group: 'BCA Cybersecurity coursework', name: 'Web Development' },
+    { id: uid(), cat: 'LEARNING', group: 'BCA Cybersecurity coursework', name: 'New Age Marketing' },
+    { id: uid(), cat: 'LEARNING', group: 'BCA Cybersecurity coursework', name: 'Entrepreneurship' }
+  ],
+  projects: [
+    {
+      id: uid(),
+      name: 'ATS Killer',
+      status: 'Live',
+      stack: 'React/Vite, Vercel Serverless API, Supabase, Razorpay, Gemini API',
+      link: 'https://ats-killer-seven.vercel.app',
+      desc: 'AI resume/JD analyzer — scores resumes against job descriptions, cites specific resume lines against JD requirements.',
+      details: 'Freemium model with anonymous usage (IP rate-limited) plus authenticated paid tiers via Razorpay; server-side entitlement checks, signed webhook verification, per-user rate limiting; bundle reduced 806KB to 68KB via code-splitting.',
+      tags: ['React','Vite','Supabase','Razorpay','Gemini API','Row-Level Security','rate limiting']
+    },
+    {
+      id: uid(),
+      name: 'api-sentinel',
+      status: 'Live',
+      stack: 'Next.js, Supabase, GitHub App (OAuth), Claude API, Gemini API, Vercel Cron',
+      link: 'https://api-sentinel-zeta.vercel.app',
+      desc: 'Autonomous agent that scans repos for breaking API changes (Stripe SDK) and auto-opens a GitHub PR with the fix.',
+      details: 'Full pipeline (changelog ingestion, repo scan, AI patch generation, auto-PR) on a daily cron; GitHub App JWT plus installation-token auth; self-serve onboarding (OAuth sign-in, repo connect, per-user dashboard); email notifications via Resend on patch delivery.',
+      tags: ['Next.js','Supabase','GitHub App/REST API','Claude API','Gemini API','NextAuth/OAuth']
+    }
+  ],
+  contact: {
+    email: 'ravimahto712@gmail.com',
+    phone: '8860620712',
+    github: 'https://github.com/Coder3257/ravi-dev',
+    college: 'Sushant University, Sector 54 Chowk, Golf Course Road'
+  }
+};
+
+/* =========================================================
+   2. STATE + PERSISTENCE
+   ========================================================= */
+var state = null;
+var activeSkillId = null;
+
+function deepClone(o){ return JSON.parse(JSON.stringify(o)); }
+
+function load(){
+  try{
+    var raw = localStorage.getItem(STORE_KEY);
+    if(!raw){ state = deepClone(SEED); save(); return; }
+    var parsed = JSON.parse(raw);
+    state = migrate(parsed);
+  }catch(e){
+    state = deepClone(SEED);
+  }
+}
+
+function migrate(d){
+  var base = deepClone(SEED);
+  if(!d || typeof d !== 'object') return base;
+  var out = base;
+  if(d.hero && typeof d.hero === 'object'){
+    /* Read the seed value BEFORE the merge: Object.assign mutates base.hero,
+       so afterwards base.hero.resumeUrl is already the stored value and
+       comparing against it can never detect the stale placeholder. */
+    var seedResume = SEED.hero.resumeUrl;
+    out.hero = Object.assign(base.hero, d.hero);
+    /* A copy stored before resume.pdf existed still carries the '#'
+       placeholder, which would keep showing "Resume (soon)" forever.
+       Upgrade just that value; a real URL the user set is left alone. */
+    if(!out.hero.resumeUrl || out.hero.resumeUrl === '#') out.hero.resumeUrl = seedResume;
+  }
+  if(d.contact && typeof d.contact === 'object') out.contact = Object.assign(base.contact, d.contact);
+  if(d.about && typeof d.about === 'object'){
+    out.about.bio = typeof d.about.bio === 'string' ? d.about.bio : base.about.bio;
+    if(Array.isArray(d.about.facts)) out.about.facts = d.about.facts.map(function(f){
+      return { id: f.id || uid(), key: f.key || '', desc: f.desc || '', val: f.val || '' };
+    });
+  }
+  if(Array.isArray(d.skills)) out.skills = d.skills.map(function(s){
+    return { id: s.id || uid(), cat: s.cat || 'CORE', group: s.group || 'General', name: s.name || 'Untitled' };
+  });
+  if(Array.isArray(d.projects)) out.projects = d.projects.map(function(p){
+    return {
+      id: p.id || uid(), name: p.name || 'Untitled', status: p.status || 'Live',
+      stack: p.stack || '', link: p.link || '', desc: p.desc || '', details: p.details || '',
+      tags: Array.isArray(p.tags) ? p.tags : String(p.tags || '').split(',').map(function(t){return t.trim();}).filter(Boolean)
+    };
+  });
+  return out;
+}
+
+function save(){
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
+  catch(e){ toast('Save failed — storage blocked'); }
+}
+
+/* =========================================================
+   3. UTIL
+   ========================================================= */
+function $(s, r){ return (r||document).querySelector(s); }
+function $$(s, r){ return Array.prototype.slice.call((r||document).querySelectorAll(s)); }
+function esc(s){
+  return String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function norm(s){ return String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim(); }
+
+var toastTimer = null;
+function toast(msg){
+  var t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 2200);
+}
+
+/* skill-name <-> project-tag matcher */
+function skillMatchesProject(skillName, project){
+  var s = norm(skillName);
+  if(s.length < 3) return false;
+  for(var i=0;i<project.tags.length;i++){
+    var t = norm(project.tags[i]);
+    if(!t) continue;
+    if(s === t) return true;
+    if(s.indexOf(t) !== -1 && t.length >= 3) return true;
+    if(t.indexOf(s) !== -1) return true;
+  }
+  return false;
+}
+function projectsForSkill(skillName){
+  return state.projects.filter(function(p){ return skillMatchesProject(skillName, p); });
+}
+
+/* =========================================================
+   4. MODAL FORM
+   ========================================================= */
+var modalHandler = null;
+function openForm(title, sub, fields, onSave){
+  $('#modalTitle').textContent = title;
+  $('#modalSub').textContent = sub || '';
+  var html = '';
+  fields.forEach(function(f){
+    html += '<div class="fld"><label class="lab">' + esc(f.label) + '</label>';
+    if(f.type === 'textarea'){
+      html += '<textarea rows="' + (f.rows || 4) + '" data-k="' + esc(f.key) + '">' + esc(f.value) + '</textarea>';
+    } else if(f.type === 'select'){
+      html += '<select data-k="' + esc(f.key) + '">';
+      f.options.forEach(function(o){
+        html += '<option value="' + esc(o) + '"' + (o === f.value ? ' selected' : '') + '>' + esc(o) + '</option>';
+      });
+      html += '</select>';
+    } else {
+      html += '<input type="text" data-k="' + esc(f.key) + '" value="' + esc(f.value) + '">';
+    }
+    if(f.hint) html += '<div class="lab" style="margin-top:6px;letter-spacing:.13em">' + esc(f.hint) + '</div>';
+    html += '</div>';
+  });
+  $('#modalFields').innerHTML = html;
+  modalHandler = onSave;
+  $('#modal').classList.add('open');
+  var first = $('#modalFields input, #modalFields textarea, #modalFields select');
+  if(first) first.focus();
+}
+function closeForm(){ $('#modal').classList.remove('open'); modalHandler = null; }
+
+$('#modalCancel').addEventListener('click', closeForm);
+$('#modal').addEventListener('click', function(e){ if(e.target === this) closeForm(); });
+$('#modalSave').addEventListener('click', function(){
+  if(!modalHandler) return closeForm();
+  var vals = {};
+  $$('#modalFields [data-k]').forEach(function(el){ vals[el.getAttribute('data-k')] = el.value.trim(); });
+  var fn = modalHandler;
+  closeForm();
+  fn(vals);
+});
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape' && $('#modal').classList.contains('open')) closeForm();
+});
+
+/* =========================================================
+   5. RENDER — HERO
+   ========================================================= */
+function renderHero(){
+  var h = state.hero;
+  $('#wm1').textContent = h.line1;
+  $('#wm2').textContent = h.line2;
+  $('#heroEyebrow').textContent = h.eyebrow;
+  $('#heroHeadline').innerHTML = esc(h.headlineA) + '<em>' + esc(h.headlineEm) + '</em>' + esc(h.headlineB);
+  $('#heroLede').textContent = h.lede;
+  var r = $('#resumeLink');
+  r.setAttribute('href', h.resumeUrl || '#');
+  r.textContent = (!h.resumeUrl || h.resumeUrl === '#') ? 'Resume (soon)' : 'Resume';
+  $('.mark').innerHTML = esc(h.line1.charAt(0) + h.line1.slice(1).toLowerCase() + ' ' + h.line2.charAt(0) + h.line2.slice(1).toLowerCase()) + '<span>.</span>';
+}
+
+/* =========================================================
+   6. RENDER — ABOUT
+   ========================================================= */
+function renderAbout(){
+  var bio = $('#aboutBio');
+  bio.textContent = state.about.bio;
+  bio.classList.add('editable');
+
+  var root = $('#aboutFacts');
+  var html = '';
+  state.about.facts.forEach(function(f){
+    html += '<div class="dl-row" data-id="' + f.id + '">' +
+              '<div class="k">' + esc(f.key) + '</div>' +
+              '<div class="d">' + esc(f.desc) + '</div>' +
+              '<div class="v">' + esc(f.val) + '</div>' +
+            '</div>' +
+            '<div class="row-tools">' +
+              '<button class="btn btn-s" data-act="edit-fact" data-id="' + f.id + '">Edit</button>' +
+              '<button class="btn btn-s" data-act="del-fact" data-id="' + f.id + '">Delete</button>' +
+            '</div>';
+  });
+  root.innerHTML = html;
+}
+
+/* =========================================================
+   7. RENDER — SKILLS
+   ========================================================= */
+function renderSkills(){
+  var order = ['CORE','TOOLING','LEARNING'];
+  var byCat = {};
+  state.skills.forEach(function(s){
+    if(!byCat[s.cat]) byCat[s.cat] = [];
+    byCat[s.cat].push(s);
+  });
+  Object.keys(byCat).forEach(function(c){ if(order.indexOf(c) === -1) order.push(c); });
+
+  var html = '';
+  order.forEach(function(cat){
+    var list = byCat[cat];
+    if(!list || !list.length) return;
+    var caption = cat === 'CORE' ? 'Used in shipped production code'
+                : cat === 'TOOLING' ? 'Daily instrumentation and integrations'
+                : cat === 'LEARNING' ? 'Current BCA Cybersecurity coursework'
+                : '';
+    html += '<div class="skill-group rv-b">' +
+              '<div class="sg-head"><span class="lab">' + esc(cat) + '</span>' +
+              '<span class="lab" style="color:var(--muted)">' + esc(caption) + '</span></div>';
+    list.forEach(function(s){
+      var hits = projectsForSkill(s.name).length;
+      html += '<div class="sk-row' + (hits ? '' : ' no-link') + (activeSkillId === s.id ? ' on' : '') +
+                '" data-act="skill" data-id="' + s.id + '">' +
+                '<div class="sk-k">' + esc(s.group) + '</div>' +
+                '<div class="sk-n">' + esc(s.name) + '</div>' +
+                '<div class="sk-c">' + (hits ? (hits + ' project' + (hits > 1 ? 's' : '')) : esc(cat)) + '</div>' +
+              '</div>' +
+              '<div class="row-tools">' +
+                '<button class="btn btn-s" data-act="edit-skill" data-id="' + s.id + '">Edit</button>' +
+                '<button class="btn btn-s" data-act="del-skill" data-id="' + s.id + '">Delete</button>' +
+              '</div>';
+    });
+    html += '</div>';
+  });
+  $('#skillsRoot').innerHTML = html;
+  revealScan();
+}
+
+/* =========================================================
+   8. RENDER — PROJECTS
+   ========================================================= */
+function renderProjects(){
+  var active = activeSkillId ? state.skills.filter(function(s){ return s.id === activeSkillId; })[0] : null;
+  var html = '';
+  state.projects.forEach(function(p){
+    var hit = active ? skillMatchesProject(active.name, p) : false;
+    var cls = active ? (hit ? 'hit' : 'dim') : '';
+    var tags = p.tags.map(function(t){
+      var on = active && norm(active.name).indexOf(norm(t)) !== -1 || (active && norm(t).indexOf(norm(active.name)) !== -1);
+      return '<span class="tag' + (on ? ' on' : '') + '">' + esc(t) + '</span>';
+    }).join('');
+    html += '<tr class="' + cls + '" data-id="' + p.id + '">' +
+      '<td><span class="mob-lab">Project</span><div><span class="pn">' + esc(p.name) + '</span></div></td>' +
+      '<td><span class="mob-lab">Status</span><span class="st">' + esc(p.status) + '</span></td>' +
+      '<td><span class="mob-lab">Stack</span><span>' + esc(p.stack) + '</span></td>' +
+      '<td><span class="mob-lab">Detail</span><div>' + esc(p.desc) +
+          '<div class="det">' + esc(p.details) + '</div>' +
+          '<div class="tags">' + tags + '</div></div></td>' +
+      '<td><span class="mob-lab">Link</span><div>' +
+          (p.link ? '<a class="btn btn-s" href="' + esc(p.link) + '" target="_blank" rel="noopener">Open</a>' : '<span class="lab">—</span>') +
+          '<div class="row-tools" style="justify-content:flex-start;">' +
+            '<button class="btn btn-s" data-act="edit-proj" data-id="' + p.id + '">Edit</button>' +
+            '<button class="btn btn-s" data-act="del-proj" data-id="' + p.id + '">Delete</button>' +
+          '</div>' +
+      '</div></td>' +
+    '</tr>';
+  });
+  $('#projRoot').innerHTML = html;
+
+  var fb = $('#filterBar');
+  if(active){
+    fb.hidden = false;
+    $('#filterName').textContent = active.name;
+    var n = projectsForSkill(active.name).length;
+    $('#filterCount').textContent = n + ' of ' + state.projects.length + ' projects';
+  } else {
+    fb.hidden = true;
+  }
+}
+
+/* =========================================================
+   9. RENDER — CONTACT
+   ========================================================= */
+function renderContact(){
+  var c = state.contact;
+  var rows = [
+    ['Email',   '<a href="mailto:' + esc(c.email) + '">' + esc(c.email) + '</a>', 'Primary'],
+    ['GitHub',  '<a href="' + esc(c.github) + '" target="_blank" rel="noopener">' + esc(c.github) + '</a>', 'Code'],
+    ['Phone',   esc(c.phone), 'Optional'],
+    ['College', esc(c.college), 'Location']
+  ];
+  var html = '';
+  rows.forEach(function(r){
+    if(!r[1]) return;
+    html += '<div class="ct-row"><div class="k">' + r[0] + '</div><div class="v">' + r[1] + '</div>' +
+            '<div class="v" style="color:var(--muted);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase">' + r[2] + '</div></div>';
+  });
+  $('#contactRoot').innerHTML = html;
+  $('#mailBtn').setAttribute('href', 'mailto:' + c.email);
+  $('#ghBtn').setAttribute('href', c.github);
+}
+
+function renderAll(){
+  renderHero();
+  renderAbout();
+  renderSkills();
+  renderProjects();
+  renderContact();
+}
+
+/* =========================================================
+   10. CRUD HANDLERS
+   ========================================================= */
+document.addEventListener('click', function(e){
+  var btn = e.target.closest('[data-act]');
+  if(!btn) return;
+  var act = btn.getAttribute('data-act');
+  var id  = btn.getAttribute('data-id');
+
+  /* --- skill click = filter --- */
+  if(act === 'skill'){
+    if(document.body.classList.contains('editing')) return;
+    var s = state.skills.filter(function(x){ return x.id === id; })[0];
+    if(!s) return;
+    if(!projectsForSkill(s.name).length){ toast('No project uses ' + s.name); return; }
+    activeSkillId = (activeSkillId === id) ? null : id;
+    renderSkills();
+    renderProjects();
+    if(activeSkillId){
+      var wt = document.getElementById('work');
+      if(wt) wt.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+    return;
+  }
+
+  /* --- ABOUT FACTS --- */
+  if(act === 'edit-fact' || act === 'del-fact'){
+    var idx = state.about.facts.findIndex(function(f){ return f.id === id; });
+    if(idx < 0) return;
+    if(act === 'del-fact'){
+      if(!confirm('Delete fact row "' + state.about.facts[idx].key + '"?')) return;
+      state.about.facts.splice(idx,1); save(); renderAbout(); toast('Fact deleted'); return;
+    }
+    var f = state.about.facts[idx];
+    openForm('Edit fact row','About section', [
+      {key:'key',  label:'Label',       type:'text', value:f.key},
+      {key:'desc', label:'Description', type:'text', value:f.desc},
+      {key:'val',  label:'Right value', type:'text', value:f.val}
+    ], function(v){
+      f.key = v.key; f.desc = v.desc; f.val = v.val;
+      save(); renderAbout(); toast('Fact saved');
+    });
+    return;
+  }
+
+  /* --- SKILLS --- */
+  if(act === 'edit-skill' || act === 'del-skill'){
+    var si = state.skills.findIndex(function(x){ return x.id === id; });
+    if(si < 0) return;
+    if(act === 'del-skill'){
+      if(!confirm('Delete skill "' + state.skills[si].name + '"?')) return;
+      if(activeSkillId === id) activeSkillId = null;
+      state.skills.splice(si,1); save(); renderSkills(); renderProjects(); toast('Skill deleted'); return;
+    }
+    var sk = state.skills[si];
+    openForm('Edit skill','Skills section', [
+      {key:'cat',   label:'Category', type:'select', value:sk.cat, options:['CORE','TOOLING','LEARNING']},
+      {key:'group', label:'Group',    type:'text',   value:sk.group, hint:'e.g. Languages, Frontend, Security'},
+      {key:'name',  label:'Skill name', type:'text', value:sk.name, hint:'Matched against project tags for filtering'}
+    ], function(v){
+      if(!v.name){ toast('Name required'); return; }
+      sk.cat = v.cat; sk.group = v.group || 'General'; sk.name = v.name;
+      save(); renderSkills(); renderProjects(); toast('Skill saved');
+    });
+    return;
+  }
+
+  /* --- PROJECTS --- */
+  if(act === 'edit-proj' || act === 'del-proj'){
+    var pi = state.projects.findIndex(function(x){ return x.id === id; });
+    if(pi < 0) return;
+    if(act === 'del-proj'){
+      if(!confirm('Delete project "' + state.projects[pi].name + '"?')) return;
+      state.projects.splice(pi,1); save(); renderProjects(); renderSkills(); toast('Project deleted'); return;
+    }
+    var p = state.projects[pi];
+    openForm('Edit project','Work table', [
+      {key:'name',    label:'Name',        type:'text', value:p.name},
+      {key:'status',  label:'Status',      type:'text', value:p.status},
+      {key:'stack',   label:'Stack',       type:'text', value:p.stack},
+      {key:'link',    label:'Link',        type:'text', value:p.link},
+      {key:'desc',    label:'Description', type:'textarea', rows:3, value:p.desc},
+      {key:'details', label:'Details',     type:'textarea', rows:4, value:p.details},
+      {key:'tags',    label:'Skill tags',  type:'text', value:p.tags.join(', '), hint:'Comma separated — these drive the skill filter'}
+    ], function(v){
+      if(!v.name){ toast('Name required'); return; }
+      p.name = v.name; p.status = v.status || 'Live'; p.stack = v.stack; p.link = v.link;
+      p.desc = v.desc; p.details = v.details;
+      p.tags = v.tags.split(',').map(function(t){ return t.trim(); }).filter(Boolean);
+      save(); renderProjects(); renderSkills(); toast('Project saved');
+    });
+    return;
+  }
+});
+
+/* --- ADD buttons --- */
+$('#addFact').addEventListener('click', function(){
+  openForm('Add fact row','About section', [
+    {key:'key',  label:'Label',       type:'text', value:''},
+    {key:'desc', label:'Description', type:'text', value:''},
+    {key:'val',  label:'Right value', type:'text', value:''}
+  ], function(v){
+    if(!v.key && !v.desc){ toast('Nothing to add'); return; }
+    state.about.facts.push({id:uid(), key:v.key, desc:v.desc, val:v.val});
+    save(); renderAbout(); toast('Fact added');
+  });
+});
+
+$('#addSkill').addEventListener('click', function(){
+  openForm('Add skill','Skills section', [
+    {key:'cat',   label:'Category',   type:'select', value:'CORE', options:['CORE','TOOLING','LEARNING']},
+    {key:'group', label:'Group',      type:'text',   value:''},
+    {key:'name',  label:'Skill name', type:'text',   value:''}
+  ], function(v){
+    if(!v.name){ toast('Name required'); return; }
+    state.skills.push({id:uid(), cat:v.cat, group:v.group || 'General', name:v.name});
+    save(); renderSkills(); renderProjects(); toast('Skill added');
+  });
+});
+
+$('#addProj').addEventListener('click', function(){
+  openForm('Add project','Work table', [
+    {key:'name',    label:'Name',        type:'text', value:''},
+    {key:'status',  label:'Status',      type:'text', value:'Live'},
+    {key:'stack',   label:'Stack',       type:'text', value:''},
+    {key:'link',    label:'Link',        type:'text', value:''},
+    {key:'desc',    label:'Description', type:'textarea', rows:3, value:''},
+    {key:'details', label:'Details',     type:'textarea', rows:4, value:''},
+    {key:'tags',    label:'Skill tags',  type:'text', value:'', hint:'Comma separated'}
+  ], function(v){
+    if(!v.name){ toast('Name required'); return; }
+    state.projects.push({
+      id:uid(), name:v.name, status:v.status || 'Live', stack:v.stack, link:v.link,
+      desc:v.desc, details:v.details,
+      tags: v.tags.split(',').map(function(t){return t.trim();}).filter(Boolean)
+    });
+    save(); renderProjects(); renderSkills(); toast('Project added');
+  });
+});
+
+/* --- HERO / CONTACT edit --- */
+$('#btnHero').addEventListener('click', function(){
+  var h = state.hero;
+  openForm('Edit hero','Wordmark and headline', [
+    {key:'line1',      label:'Wordmark line 1', type:'text', value:h.line1},
+    {key:'line2',      label:'Wordmark line 2', type:'text', value:h.line2},
+    {key:'eyebrow',    label:'Eyebrow',         type:'text', value:h.eyebrow},
+    {key:'headlineA',  label:'Headline before italic', type:'text', value:h.headlineA},
+    {key:'headlineEm', label:'Italic pigment phrase',  type:'text', value:h.headlineEm},
+    {key:'headlineB',  label:'Headline after italic',  type:'text', value:h.headlineB},
+    {key:'lede',       label:'Lede',            type:'textarea', rows:3, value:h.lede},
+    {key:'resumeUrl',  label:'Resume URL',      type:'text', value:h.resumeUrl, hint:'Currently resume.pdf, served from the site root'}
+  ], function(v){
+    Object.keys(v).forEach(function(k){ h[k] = v[k]; });
+    if(!h.line1) h.line1 = 'RAVI';
+    if(!h.line2) h.line2 = 'MAHTO';
+    save(); renderHero(); toast('Hero saved');
+  });
+});
+
+$('#btnContact').addEventListener('click', function(){
+  var c = state.contact;
+  openForm('Edit contact','Contact section', [
+    {key:'email',   label:'Email',   type:'text', value:c.email},
+    {key:'github',  label:'GitHub',  type:'text', value:c.github},
+    {key:'phone',   label:'Phone',   type:'text', value:c.phone, hint:'Leave blank to hide the row'},
+    {key:'college', label:'College', type:'text', value:c.college}
+  ], function(v){
+    c.email = v.email; c.github = v.github; c.phone = v.phone; c.college = v.college;
+    save(); renderContact(); toast('Contact saved');
+  });
+});
+
+/* --- BIO inline edit --- */
+$('#aboutBio').addEventListener('blur', function(){
+  if(!document.body.classList.contains('editing')) return;
+  var t = this.textContent.trim();
+  if(t && t !== state.about.bio){ state.about.bio = t; save(); toast('Bio saved'); }
+});
+
+/* =========================================================
+   11. EDIT MODE + EXPORT / IMPORT
+   ========================================================= */
+$('#editToggle').addEventListener('click', function(){
+  var on = document.body.classList.toggle('editing');
+  $('#aboutBio').setAttribute('contenteditable', on ? 'true' : 'false');
+  this.textContent = on ? 'Exit Edit Mode' : 'Edit Mode';
+  if(on && activeSkillId){ activeSkillId = null; renderSkills(); renderProjects(); }
+  toast(on ? 'Edit mode on' : 'Edit mode off');
+});
+
+$('#btnExport').addEventListener('click', function(){
+  var blob = new Blob([JSON.stringify(state, null, 2)], {type:'application/json'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'ravi-portfolio-' + new Date().toISOString().slice(0,10) + '.json';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+  toast('Exported JSON');
+});
+
+$('#btnImport').addEventListener('click', function(){ $('#fileImport').click(); });
+
+$('#fileImport').addEventListener('change', function(e){
+  var file = e.target.files && e.target.files[0];
+  if(!file) return;
+  var fr = new FileReader();
+  fr.onload = function(){
+    try{
+      var data = JSON.parse(fr.result);
+      if(!data || typeof data !== 'object') throw new Error('bad');
+      state = migrate(data);
+      activeSkillId = null;
+      save(); renderAll(); toast('Imported ' + file.name);
+    }catch(err){
+      toast('Import failed — not valid JSON');
+    }
+  };
+  fr.readAsText(file);
+  e.target.value = '';
+});
+
+$('#btnReset').addEventListener('click', function(){
+  if(!confirm('Reset all content back to the seeded defaults? This overwrites your local edits.')) return;
+  state = deepClone(SEED);
+  activeSkillId = null;
+  save(); renderAll(); toast('Reset to defaults');
+});
+
+$('#clearFilter').addEventListener('click', function(){
+  activeSkillId = null; renderSkills(); renderProjects();
+});
+
+/* =========================================================
+   12. REVEAL GRAMMAR
+   ========================================================= */
+var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var io = null;
+
+function revealScan(){
+  if(reduced || !io) return;
+  $$('.rv-b').forEach(function(el){
+    if(el.dataset.obs) return;
+    el.dataset.obs = '1';
+    io.observe(el);
+  });
+}
+
+if(!reduced){
+  document.documentElement.classList.add('anim');
+  io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(!en.isIntersecting) return;
+      var el = en.target;
+      var sibs = Array.prototype.slice.call(el.parentNode.children).filter(function(c){ return c.classList.contains('rv-b'); });
+      var i = Math.max(0, sibs.indexOf(el));
+      setTimeout(function(){ el.classList.add('in'); }, i * 70);
+      io.unobserve(el);
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.01 });
+}
+
+/* Hero pieces: never observed — revealed on rAF so a short viewport cannot strand them. */
+function revealHeroNow(){
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      $$('.hero .rv-b').forEach(function(el, i){
+        setTimeout(function(){ el.classList.add('in'); }, i * 70);
+      });
+      var wm1 = $('#wm1'), wm2 = $('#wm2'), sub = $('#subject');
+      [wm1, wm2, sub].forEach(function(el){ if(el) el.style.opacity = '1'; });
+    });
+  });
+}
+
+/* =========================================================
+   13. SCROLL MOTION — split wordmark + subject
+   ========================================================= */
+var heroEl = $('.hero');
+var wm1El = $('#wm1'), wm2El = $('#wm2'), subEl = $('#subject');
+
+function clamp01(x){ return x < 0 ? 0 : x > 1 ? 1 : x; }
+
+function heroMotion(){
+  if(reduced) return;
+  var rect = heroEl.getBoundingClientRect();
+  var h = rect.height || 1;
+  var p = clamp01((-rect.top) / h);          // 0 at top of hero, 1 when scrolled one hero height
+  var vh = window.innerHeight;
+  var up   = -0.20 * vh * p;                  // upper line up ~20vh
+  var down =  0.20 * vh * p;                  // lower line down ~20vh
+  var rise = -0.24 * vh * p;                  // subject rises ~24vh
+  var sc   = 1 + 0.09 * p;
+  wm1El.style.transform = 'translate3d(' + (2 * p) + 'vw,' + up + 'px,0)';
+  wm2El.style.transform = 'translate3d(' + (2 * p) + 'vw,' + down + 'px,0)';
+  subEl.style.transform = 'translate3d(0,' + rise + 'px,0) scale(' + sc.toFixed(4) + ')';
+}
+
+/* =========================================================
+   14. COMPUTED STUDY
+   Model: B(p) = 806 - 738p KB. theta = 90deg * p. Transfer @ 400 KB/s.
+   ========================================================= */
+var B0 = 806, B1 = 68, RATE = 400;   // KB, KB, KB/s
+var CX = 40, CY = 260, R = 160;      // arc centre + radius, SVG user units
+var BAR_X0 = 40, BAR_FULL = 300;     // 300px == 806KB
+
+var studyEl = $('#study');
+var elBundle = $('#roBundle'), elCut = $('#roCut'), elTime = $('#roTime');
+var elSpoke = $('#arcSpoke'), elMarker = $('#arcMarker'), elTrail = $('#arcTrail'),
+    elBar = $('#bar'), elTheta = $('#thetaLabel');
+
+function studyMotion(){
+  var rect = studyEl.getBoundingClientRect();
+  var travel = rect.height - window.innerHeight;
+  if(travel <= 0) travel = 1;
+  var p = clamp01((-rect.top) / travel);
+
+  var B = B0 - (B0 - B1) * p;
+  var cut = (B0 - B) / B0 * 100;
+  var secs = B / RATE;
+  var theta = 90 * p;
+
+  elBundle.textContent = Math.round(B) + ' KB';
+  elCut.textContent = cut.toFixed(1) + ' %';
+  elTime.textContent = secs.toFixed(2) + ' s';
+  elTheta.textContent = 'θ = ' + theta.toFixed(1) + '°';
+
+  var rad = theta * Math.PI / 180;
+  var x = CX + R * Math.cos(rad);
+  var y = CY - R * Math.sin(rad);
+  elSpoke.setAttribute('x2', x.toFixed(2));
+  elSpoke.setAttribute('y2', y.toFixed(2));
+  elMarker.setAttribute('x', (x - 6).toFixed(2));
+  elMarker.setAttribute('y', (y - 6).toFixed(2));
+  elTrail.setAttribute('d', 'M' + (CX + R) + ' ' + CY + ' A' + R + ' ' + R + ' 0 0 0 ' + x.toFixed(2) + ' ' + y.toFixed(2));
+
+  // bar length is the SAME calculation as the printed number
+  elBar.setAttribute('x2', (BAR_X0 + BAR_FULL * (B / B0)).toFixed(2));
+}
+
+/* =========================================================
+   15. LOOP + BOOT
+   ========================================================= */
+var ticking = false;
+function onScroll(){
+  if(ticking) return;
+  ticking = true;
+  requestAnimationFrame(function(){
+    heroMotion();
+    studyMotion();
+    ticking = false;
+  });
+}
+window.addEventListener('scroll', onScroll, {passive:true});
+window.addEventListener('resize', onScroll);
+
+load();
+renderAll();
+$('#yr').textContent = new Date().getFullYear();
+revealScan();
+revealHeroNow();
+heroMotion();
+studyMotion();
+</script>
+</body>
+</html>
