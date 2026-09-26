@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>RaviOS — Ravi Mahto's desktop</title>
+<meta name="description" content="RaviOS — a retro desktop-OS portfolio for Ravi Mahto. Open windows for his projects, story, and contact.">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{
+  --berry:#E8394C; --berry-deep:#C82740; --ink:#191512;
+  --face:#ECE7E0; --face-hi:#FFFFFF; --face-lo:#9A928A; --face-lo2:#6E665E;
+  --title:#E8394C; --title-2:#C82740; --title-off:#B8AEA4;
+  --desk1:#2A2130; --desk2:#151019;
+  --mono:ui-monospace,'Cascadia Code','Consolas',Menlo,monospace;
+  --sans:Tahoma,Verdana,system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;font-family:var(--sans);font-size:13px;color:var(--ink);
+  overflow:hidden;background:var(--desk2);-webkit-font-smoothing:antialiased;
+  user-select:none;-webkit-user-select:none}
+/* desktop wallpaper */
+#desktop{position:fixed;inset:0;
+  background:
+    radial-gradient(120% 80% at 50% 120%,rgba(232,57,76,.34),transparent 60%),
+    radial-gradient(90% 70% at 80% -10%,#3a2c44,transparent 55%),
+    linear-gradient(var(--desk1),var(--desk2));
+}
+#desktop::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px) 0 0/40px 40px,
+    linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px) 0 0/40px 40px}
+/* CRT overlay */
+#crt{position:fixed;inset:0;z-index:9999;pointer-events:none;
+  background:repeating-linear-gradient(rgba(0,0,0,0) 0 2px,rgba(0,0,0,.06) 2px 3px);
+  box-shadow:inset 0 0 160px rgba(0,0,0,.55)}
+#crt.flick{animation:flick 5s steps(1) infinite}
+@keyframes flick{0%,97%,100%{opacity:1}98%{opacity:.86}99%{opacity:.95}}
+@media(prefers-reduced-motion:reduce){#crt.flick{animation:none}}
+/* boot */
+#boot{position:fixed;inset:0;z-index:5000;background:var(--ink);color:#F3ECE6;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;cursor:pointer}
+#boot .logo{font-weight:800;font-size:34px;letter-spacing:-.03em}
+#boot .logo b{color:var(--berry)}
+#boot .tag{font:600 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#B8ADA4}
+#boot .track{width:min(320px,72vw);height:14px;border:2px solid #4a4038;background:#0d0a08;padding:2px}
+#boot .fill{height:100%;width:0;background:repeating-linear-gradient(90deg,var(--berry) 0 12px,transparent 12px 16px);transition:width .1s linear}
+#boot .hint{font:600 11px/1 var(--mono);color:#6E665E;letter-spacing:.06em}
+/* beveled helpers (retro chrome) */
+.bevel{border:2px solid;border-color:var(--face-hi) var(--face-lo2) var(--face-lo2) var(--face-hi);background:var(--face)}
+/* windows */
+.win{position:absolute;min-width:220px;width:440px;max-width:calc(100vw - 20px);
+  display:none;flex-direction:column;box-shadow:3px 3px 0 rgba(0,0,0,.35),0 18px 40px -18px rgba(0,0,0,.7)}
+.win.open{display:flex}
+.win .titlebar{display:flex;align-items:center;gap:8px;padding:4px 4px 4px 8px;cursor:grab;
+  background:linear-gradient(var(--title-off),#a89e94);color:#fff;touch-action:none}
+.win.active .titlebar{background:linear-gradient(90deg,var(--title),var(--title-2))}
+.win .titlebar .t{font-weight:700;font-size:12.5px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.01em}
+.win .titlebar .ic{font-size:13px}
+.win .tbtn{width:20px;height:18px;display:flex;align-items:center;justify-content:center;
+  font:700 12px/1 var(--sans);color:var(--ink);
+  border:2px solid;border-color:var(--face-hi) var(--face-lo2) var(--face-lo2) var(--face-hi);background:var(--face)}
+.win .tbtn:active{border-color:var(--face-lo2) var(--face-hi) var(--face-hi) var(--face-lo2)}
+.win .body{background:var(--face);padding:14px 16px;overflow:auto;max-height:min(66vh,520px);line-height:1.5;
+  border:2px solid;border-color:var(--face-hi) var(--face-lo2) var(--face-lo2) var(--face-hi)}
+.win .body h3{margin:0 0 6px;font-size:16px}
+.win .body h4{margin:14px 0 4px;font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--face-lo2);font-family:var(--mono)}
+.win .body p{margin:0 0 10px;color:#2c2620}
+.win .body a{color:var(--berry-deep);font-weight:700;text-decoration:none}
+.win .body a:hover{text-decoration:underline}
+.win .body ul{margin:6px 0 10px;padding-left:18px}
+.win .body li{margin:3px 0}
+.oscard{border:2px solid;border-color:var(--face-lo2) var(--face-hi) var(--face-hi) var(--face-lo2);
+  padding:12px;margin:10px 0;background:#F7F3EE}
+.oscard .ct{font-weight:800;font-size:14px;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.oscard .live{font:700 9.5px/1 var(--mono);letter-spacing:.1em;color:#1a7f37}
+.oscard .cs{font:600 10.5px/1.4 var(--mono);color:var(--face-lo2);margin:6px 0 8px}
+.osbtn{display:inline-block;padding:5px 12px;margin-top:4px;font-weight:700;font-size:12px;color:var(--ink);
+  border:2px solid;border-color:var(--face-hi) var(--face-lo2) var(--face-lo2) var(--face-hi);background:var(--face)}
+.osbtn:active{border-color:var(--face-lo2) var(--face-hi) var(--face-hi) var(--face-lo2)}
+.osbtn.pri{background:var(--berry);color:#fff;border-color:#ff8593 #8f1c2e #8f1c2e #ff8593}
+/* terminal window */
+#w-term .body{background:#0d0b10;color:#54f1a6;font-family:var(--mono);font-size:12.5px;border-color:#000 #333 #333 #000}
+#w-term .body a{color:#7fd1ff}
+#term-log{white-space:pre-wrap;margin:0}
+#term-line{display:flex;gap:6px;align-items:center}
+#term-line .ps{color:#ff8593}
+#term-in{flex:1;background:transparent;border:0;outline:0;color:#e7ffe7;font:inherit;caret-color:#54f1a6}
+/* desktop icons */
+#icons{position:absolute;top:14px;left:14px;display:flex;flex-direction:column;gap:6px;z-index:1}
+.dicon{width:82px;padding:8px 4px 6px;display:flex;flex-direction:column;align-items:center;gap:6px;
+  color:#fff;text-align:center;border:1px dotted transparent;background:none;font-family:var(--sans)}
+.dicon:focus-visible,.dicon.sel{outline:0;border-color:rgba(255,255,255,.7);background:rgba(232,57,76,.32)}
+.dicon .gl{width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:22px;
+  border:2px solid;border-color:var(--face-hi) var(--face-lo2) var(--face-lo2) var(--face-hi);background:var(--face);
+  box-shadow:0 2px 6px rgba(0,0,0,.4)}
+.dicon .lb{font-size:11.5px;line-height:1.2;text-shadow:0 1px 2px rgba(0,0,0,.9);font-weight:600}
+/* taskbar */
+#taskbar{position:absolute;left:0;right:0;bottom:0;height:38px;z-index:400;display:flex;align-items:center;gap:6px;
+  padding:4px 6px;border-top:2px solid var(--face-hi);
+  background:linear-gradient(var(--face),#d8d2ca)}
+#start{display:flex;align-items:center;gap:7px;padding:4px 12px 4px 9px;font-weight:800;font-size:13px;height:28px}
+#start .sd{width:14px;height:14px;border-radius:50%;background:var(--berry);box-shadow:0 0 0 2px #fff,0 0 0 3px var(--berry-deep)}
+#start.on{border-color:var(--face-lo2) var(--face-hi) var(--face-hi) var(--face-lo2)}
+#tasks{display:flex;gap:5px;flex:1;overflow:hidden;height:28px}
+.tab{max-width:150px;min-width:70px;padding:2px 10px;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;height:28px}
+.tab.active{border-color:var(--face-lo2) var(--face-hi) var(--face-hi) var(--face-lo2);background:#dcd6ce;font-weight:700}
+#clock{padding:0 12px;height:28px;display:flex;align-items:center;font:600 12px/1 var(--mono);
+  border:2px solid;border-color:var(--face-lo2) var(--face-hi) var(--face-hi) var(--face-lo2)}
+/* start menu */
+#startmenu{position:absolute;left:6px;bottom:40px;width:250px;z-index:500;display:none;
+  box-shadow:3px 3px 0 rgba(0,0,0,.4),0 20px 40px -16px rgba(0,0,0,.7)}
+#startmenu.open{display:flex}
+#startmenu .rail{width:34px;background:linear-gradient(var(--berry-deep),#7a1826);
+  writing-mode:vertical-rl;transform:rotate(180deg);color:#fff;font-weight:800;font-size:15px;letter-spacing:.1em;
+  display:flex;align-items:center;justify-content:center;padding:14px 0}
+#startmenu .items{flex:1;background:var(--face);padding:6px}
+#startmenu button{width:100%;display:flex;align-items:center;gap:10px;padding:8px 10px;font-size:13px;font-weight:600;text-align:left;color:var(--ink)}
+#startmenu button:hover{background:var(--berry);color:#fff}
+#startmenu .gl{width:22px;text-align:center;font-size:16px}
+#startmenu hr{border:0;border-top:1px solid var(--face-lo);margin:5px 2px}
+@media(max-width:700px){
+  .win{width:calc(100vw - 20px)!important;left:10px!important;max-height:none}
+  .win .body{max-height:60vh}
+  #icons{gap:2px}
+}
+</style>
+</head>
+<body>
+<div id="crt" class="flick"></div>
+
+<div id="boot">
+  <div class="logo">Ravi<b>OS</b></div>
+  <div class="tag">Personal Portfolio System · v5.1</div>
+  <div class="track"><div class="fill" id="bootFill"></div></div>
+  <div class="hint" id="bootHint">booting…</div>
+</div>
+
+<main id="desktop" aria-label="RaviOS desktop">
+  <div id="icons">
+    <button class="dicon" data-open="about"><span class="gl">👤</span><span class="lb">About Me</span></button>
+    <button class="dicon" data-open="projects"><span class="gl">📁</span><span class="lb">Projects</span></button>
+    <button class="dicon" data-open="term"><span class="gl">⌨️</span><span class="lb">Terminal</span></button>
+    <button class="dicon" data-open="contact"><span class="gl">✉️</span><span class="lb">Contact</span></button>
+    <button class="dicon" data-href="classic.html"><span class="gl">📄</span><span class="lb">Classic site</span></button>
+    <button class="dicon" data-href="index.html"><span class="gl">🏠</span><span class="lb">Main site</span></button>
+  </div>
+
+  <!-- WELCOME -->
+  <section class="win" id="w-welcome" role="dialog" aria-label="Welcome" style="left:120px;top:70px;width:400px">
+    <div class="titlebar"><span class="ic">💾</span><span class="t">Welcome to RaviOS</span>
+      <button class="tbtn" data-min aria-label="Minimize">_</button><button class="tbtn" data-close aria-label="Close">×</button></div>
+    <div class="body">
+      <h3>Hi, I'm Ravi Mahto 👋</h3>
+      <p>Full-stack &amp; AI-agent developer, and a third-year BCA (Cybersecurity) student. This is my portfolio as a tiny retro desktop — <b>double-click the icons</b> on the left, or hit <b>Start</b>.</p>
+      <p style="margin-bottom:0">
+        <button class="osbtn pri" data-open="projects">📁 See my projects</button>
+        <button class="osbtn" data-open="term">⌨️ Open a terminal</button>
+      </p>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="win" id="w-about" role="dialog" aria-label="About Me" style="left:180px;top:110px;width:460px">
+    <div class="titlebar"><span class="ic">👤</span><span class="t">About Me — ravi.txt</span>
+      <button class="tbtn" data-min aria-label="Minimize">_</button><button class="tbtn" data-close aria-label="Close">×</button></div>
+    <div class="body">
+      <h3>Ravi Mahto</h3>
+      <p>I build and ship production software — not just coursework. Two live products spanning frontend, backend, cloud, auth, payments and applied AI, each owned end-to-end from the first component to the production domain.</p>
+      <h4>Education</h4>
+      <p>Sushant University — BCA in Cybersecurity, 3rd year (semester 5). Golf Course Road, Gurugram.</p>
+      <h4>What I do</h4>
+      <ul>
+        <li>Full-stack apps in React / Next.js + Supabase</li>
+        <li>Autonomous AI agents (Claude &amp; Gemini)</li>
+        <li>Security-first: RLS, signed webhooks, rate limits</li>
+        <li>Take an idea 0→1 to a live, secured URL</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="win" id="w-projects" role="dialog" aria-label="Projects" style="left:240px;top:80px;width:480px">
+    <div class="titlebar"><span class="ic">📁</span><span class="t">Projects</span>
+      <button class="tbtn" data-min aria-label="Minimize">_</button><button class="tbtn" data-close aria-label="Close">×</button></div>
+    <div class="body">
+      <div class="oscard">
+        <div class="ct">ATS Killer <span class="live">● LIVE</span></div>
+        <div class="cs">React/Vite · Vercel API · Supabase · Razorpay · Gemini</div>
+        <p style="margin:0 0 8px">AI resume/JD analyzer — scores resumes against job descriptions and cites the exact resume lines behind each requirement. Freemium with Razorpay billing, server-side entitlements, signed webhooks. Bundle cut 806&nbsp;KB → 68&nbsp;KB.</p>
+        <a class="osbtn pri" href="https://ats-killer-seven.vercel.app" target="_blank" rel="noopener">Open ↗</a>
+      </div>
+      <div class="oscard">
+        <div class="ct">api-sentinel <span class="live">● LIVE</span></div>
+        <div class="cs">Next.js · Supabase · GitHub App · Claude · Gemini · Cron</div>
+        <p style="margin:0 0 8px">Autonomous agent that scans repos for breaking API changes and auto-opens a fix PR on a daily cron. GitHub App auth, self-serve OAuth onboarding, per-user dashboard, email via Resend.</p>
+        <a class="osbtn pri" href="https://api-sentinel-zeta.vercel.app" target="_blank" rel="noopener">Open ↗</a>
+      </div>
+      <p style="margin:0"><a href="https://github.com/Coder3257/ravi-dev" target="_blank" rel="noopener">▸ Both are open source on GitHub ↗</a></p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="win" id="w-contact" role="dialog" aria-label="Contact" style="left:300px;top:130px;width:400px">
+    <div class="titlebar"><span class="ic">✉️</span><span class="t">Contact</span>
+      <button class="tbtn" data-min aria-label="Minimize">_</button><button class="tbtn" data-close aria-label="Close">×</button></div>
+    <div class="body">
+      <h3>Get in touch</h3>
+      <p>Open to internships and security-adjacent engineering roles.</p>
+      <ul>
+        <li>📧 <a href="mailto:ravimahto712@gmail.com">ravimahto712@gmail.com</a></li>
+        <li>📞 <a href="tel:8860620712">8860620712</a></li>
+        <li>💻 <a href="https://github.com/Coder3257/ravi-dev" target="_blank" rel="noopener">github.com/Coder3257</a></li>
+        <li>📄 <a href="resume.pdf" target="_blank" rel="noopener">Resume.pdf</a></li>
+      </ul>
+      <p style="margin-bottom:0"><a class="osbtn pri" href="mailto:ravimahto712@gmail.com">✉️ Email Ravi</a></p>
+    </div>
+  </section>
+
+  <!-- TERMINAL -->
+  <section class="win" id="w-term" role="dialog" aria-label="Terminal" style="left:360px;top:90px;width:500px">
+    <div class="titlebar"><span class="ic">⌨️</span><span class="t">ravi@raviOS: ~</span>
+      <button class="tbtn" data-min aria-label="Minimize">_</button><button class="tbtn" data-close aria-label="Close">×</button></div>
+    <div class="body" id="term-body">
+      <pre id="term-log"></pre>
+      <div id="term-line"><span class="ps">ravi@raviOS:~$</span><input id="term-in" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Terminal input"></div>
+    </div>
+  </section>
+
+  <!-- TASKBAR -->
+  <div id="taskbar">
+    <button id="start" class="bevel"><span class="sd"></span>Start</button>
+    <div id="tasks"></div>
+    <div id="clock" aria-live="off">--:--</div>
+  </div>
+
+  <!-- START MENU -->
+  <div id="startmenu">
+    <div class="rail">Ravi<b>OS</b></div>
+    <div class="items">
+      <button data-open="about"><span class="gl">👤</span>About Me</button>
+      <button data-open="projects"><span class="gl">📁</span>Projects</button>
+      <button data-open="term"><span class="gl">⌨️</span>Terminal</button>
+      <button data-open="contact"><span class="gl">✉️</span>Contact</button>
+      <hr>
+      <button data-href="resume.pdf"><span class="gl">📄</span>Resume.pdf</button>
+      <button data-href="https://github.com/Coder3257/ravi-dev"><span class="gl">💻</span>GitHub ↗</button>
+      <button data-href="index.html"><span class="gl">🏠</span>Back to main site</button>
+      <hr>
+      <button id="shutdown"><span class="gl">⏻</span>Shut down…</button>
+    </div>
+  </div>
+</main>
+<script>
+'use strict';
+var $$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s));};
+var tasks=document.getElementById('tasks');
+var z=10;
+function winEl(id){return document.getElementById('w-'+id);}
+function tab(id){return tasks.querySelector('[data-id="'+id+'"]');}
+function setActive(id){
+  $$('.win').forEach(function(w){w.classList.toggle('active',w.id==='w-'+id);});
+  $$('#tasks .tab').forEach(function(t){t.classList.toggle('active',t.dataset.id===id);});
+}
+function focusWin(id){var el=winEl(id);if(!el)return;el.style.zIndex=++z;setActive(id);}
+function ensureTab(id){
+  if(tab(id))return;
+  var el=winEl(id);
+  var b=document.createElement('button');
+  b.className='tab bevel';b.dataset.id=id;
+  b.innerHTML='<span>'+el.querySelector('.ic').textContent+'</span>'+el.querySelector('.t').textContent;
+  b.addEventListener('click',function(){toggleTab(id);});
+  tasks.appendChild(b);
+}
+function openWin(id){
+  var el=winEl(id);if(!el)return;
+  el.classList.add('open');el.style.zIndex=++z;
+  ensureTab(id);setActive(id);
+  if(id==='term'){var i=document.getElementById('term-in');if(i)setTimeout(function(){i.focus();},0);}
+}
+function closeWin(id){var el=winEl(id);if(!el)return;el.classList.remove('open','active');var t=tab(id);if(t)t.remove();}
+function minWin(id){var el=winEl(id);if(!el)return;el.classList.remove('open','active');var t=tab(id);if(t)t.classList.remove('active');}
+function toggleTab(id){
+  var el=winEl(id);
+  if(el.classList.contains('open')&&el.classList.contains('active'))minWin(id);
+  else{el.classList.add('open');focusWin(id);}
+}
+function nav(h){if(!h)return;if(/^https?:/i.test(h)||/\.pdf$/i.test(h))window.open(h,'_blank','noopener');else location.href=h;}
+
+/* click delegation (windows, start menu, in-window buttons) */
+document.addEventListener('click',function(e){
+  var btn=e.target.closest('[data-close],[data-min],[data-open],[data-href]');
+  if(!btn||btn.classList.contains('dicon'))return;
+  if(btn.hasAttribute('data-close')){closeWin(btn.closest('.win').id.slice(2));return;}
+  if(btn.hasAttribute('data-min')){minWin(btn.closest('.win').id.slice(2));return;}
+  if(btn.hasAttribute('data-open')){openWin(btn.dataset.open);closeStart();return;}
+  if(btn.hasAttribute('data-href')){nav(btn.dataset.href);closeStart();return;}
+});
+
+/* desktop icons: double-click / Enter to open, single click selects */
+$$('.dicon').forEach(function(ic){
+  var act=function(){ic.dataset.open?openWin(ic.dataset.open):nav(ic.dataset.href);};
+  ic.addEventListener('dblclick',act);
+  ic.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();act();}});
+  ic.addEventListener('click',function(){$$('.dicon').forEach(function(d){d.classList.remove('sel');});ic.classList.add('sel');});
+});
+
+/* start menu */
+var start=document.getElementById('start'),menu=document.getElementById('startmenu');
+function closeStart(){menu.classList.remove('open');start.classList.remove('on');}
+start.addEventListener('click',function(e){e.stopPropagation();var o=menu.classList.toggle('open');start.classList.toggle('on',o);});
+document.addEventListener('click',function(e){if(!menu.contains(e.target)&&!start.contains(e.target))closeStart();});
+
+/* dragging via pointer events */
+var drag=null;
+document.addEventListener('pointerdown',function(e){
+  var win=e.target.closest('.win');
+  if(win)focusWin(win.id.slice(2));
+  var tb=e.target.closest('.titlebar');
+  if(!tb||e.target.closest('.tbtn'))return;
+  var w=tb.parentElement,r=w.getBoundingClientRect();
+  drag={w:w,dx:e.clientX-r.left,dy:e.clientY-r.top};
+  tb.setPointerCapture(e.pointerId);tb.style.cursor='grabbing';
+});
+document.addEventListener('pointermove',function(e){
+  if(!drag)return;
+  var x=e.clientX-drag.dx,y=e.clientY-drag.dy;
+  x=Math.max(-drag.w.offsetWidth+80,Math.min(x,window.innerWidth-40));
+  y=Math.max(0,Math.min(y,window.innerHeight-58));
+  drag.w.style.left=x+'px';drag.w.style.top=y+'px';
+});
+document.addEventListener('pointerup',function(){if(drag){drag.w.querySelector('.titlebar').style.cursor='grab';drag=null;}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){var a=document.querySelector('.win.active.open');if(a)minWin(a.id.slice(2));closeStart();}});
+
+/* clock */
+function tick(){var d=new Date(),p=function(n){return(n<10?'0':'')+n;};document.getElementById('clock').textContent=p(d.getHours())+':'+p(d.getMinutes());}
+tick();setInterval(tick,15000);
+
+/* boot */
+var boot=document.getElementById('boot'),fill=document.getElementById('bootFill'),bhint=document.getElementById('bootHint');
+var steps=['loading kernel…','mounting /projects…','starting window manager…','ready.'],pct=0,si=0,booted=false;
+var bi=setInterval(function(){
+  pct=Math.min(100,pct+Math.random()*22+9);fill.style.width=pct+'%';
+  bhint.textContent=steps[Math.min(si++,steps.length-1)];
+  if(pct>=100){clearInterval(bi);setTimeout(finishBoot,420);}
+},260);
+function finishBoot(){if(booted)return;booted=true;clearInterval(bi);boot.style.display='none';openWin('welcome');}
+boot.addEventListener('click',finishBoot);
+
+/* shutdown -> goodbye screen */
+document.getElementById('shutdown').addEventListener('click',function(){
+  closeStart();
+  boot.querySelector('.logo').innerHTML='Good<b>bye</b>';
+  boot.querySelector('.tag').textContent='It is now safe to close this window.';
+  fill.style.width='100%';
+  bhint.innerHTML='<a href="index.html" style="color:#FF8593">← back to the main site</a>';
+  boot.style.display='flex';boot.style.cursor='default';booted=true;
+});
+
+/* terminal */
+var tlog=document.getElementById('term-log'),tin=document.getElementById('term-in');
+var CMDS={
+  help:'commands: about  projects  contact  skills  resume  whoami  clear  sudo',
+  about:'Ravi Mahto — full-stack & AI-agent dev. BCA Cybersecurity, 3rd yr, Sushant University.',
+  whoami:'ravi',
+  skills:'react  next.js  typescript  node  supabase  postgres  claude  gemini  vercel  razorpay',
+  projects:'ATS Killer   -> https://ats-killer-seven.vercel.app\napi-sentinel -> https://api-sentinel-zeta.vercel.app',
+  contact:'email: ravimahto712@gmail.com   phone: 8860620712   gh: github.com/Coder3257',
+  resume:function(){window.open('resume.pdf','_blank','noopener');return 'opening resume.pdf…';},
+  sudo:'nice try 😏'
+};
+if(tlog)tlog.textContent='RaviOS 5.1  ·  type "help" for commands\n';
+function runCmd(raw){
+  var cmd=raw.trim().toLowerCase();
+  if(!cmd)return '';
+  if(cmd==='clear'){tlog.textContent='';return null;}
+  var v=CMDS[cmd.split(' ')[0]];
+  return v==null?('command not found: '+cmd+'  (try "help")'):(typeof v==='function'?v():v);
+}
+if(tin)tin.addEventListener('keydown',function(e){
+  if(e.key!=='Enter')return;
+  var raw=tin.value;tin.value='';
+  var out=runCmd(raw);
+  if(out===null)return;
+  tlog.textContent+='ravi@raviOS:~$ '+raw+'\n'+(out?out+'\n':'');
+  document.getElementById('term-body').scrollTop=1e9;
+});
+
+/* self-check: runCmd routes known/unknown/clear correctly */
+console.assert(runCmd('whoami')==='ravi','term whoami');
+console.assert(/not found/.test(runCmd('nope')),'term unknown');
+</script>
+</body>
+</html>
+
+
+
+
+
+
+

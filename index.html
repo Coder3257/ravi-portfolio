@@ -322,6 +322,25 @@ body.menu-open .nav-links a{padding:12px 14px}
 @keyframes cardrive{0%,100%{top:64%;left:50%}25%{top:40%;left:28%}50%{top:28%;left:66%}75%{top:56%;left:72%}}
 @media(max-width:960px){.world-grid{grid-template-columns:1fr;gap:36px}}
 @media(prefers-reduced-motion:reduce){.map .car{animation:none}}
+/* raviOS preview */
+.osprev{display:block;position:relative;aspect-ratio:1/.82;border-radius:var(--r-lg);overflow:hidden;
+  border:1px solid rgba(255,255,255,.14);box-shadow:inset 0 0 90px rgba(0,0,0,.55),var(--shadow-lg);
+  background:radial-gradient(120% 80% at 50% 120%,rgba(232,57,76,.34),transparent 60%),linear-gradient(#2A2130,#151019)}
+.osprev::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(rgba(0,0,0,0) 0 2px,rgba(0,0,0,.07) 2px 3px)}
+.osprev .ico{position:absolute;left:5%;top:8%;display:flex;flex-direction:column;gap:10px;font-size:21px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.7))}
+.osprev .mini{position:absolute;left:20%;top:12%;width:64%;background:#ECE7E0;
+  border:2px solid;border-color:#fff #6E665E #6E665E #fff;box-shadow:4px 4px 0 rgba(0,0,0,.4)}
+.osprev .mini .bar{display:flex;align-items:center;gap:6px;padding:4px 7px;font:700 10.5px/1 var(--mono);color:#fff;background:linear-gradient(90deg,#E8394C,#C82740)}
+.osprev .mini .bar i{margin-left:auto;width:12px;height:10px;background:#ECE7E0;border:1px solid #6E665E}
+.osprev .mini .c{padding:10px 11px;font:600 10.5px/1.55 var(--mono);color:#2c2620}
+.osprev .mini .c b{color:#1a7f37}
+.osprev .bar2{position:absolute;left:0;right:0;bottom:0;height:24px;display:flex;align-items:center;gap:7px;padding:0 7px;
+  background:linear-gradient(#ECE7E0,#d8d2ca);border-top:2px solid #fff}
+.osprev .bar2 .st{font:800 10.5px/1 var(--sans);color:#191512;display:flex;align-items:center;gap:5px}
+.osprev .bar2 .st b{width:9px;height:9px;border-radius:50%;background:#E8394C;box-shadow:0 0 0 1.5px #fff}
+.osprev .bar2 .tb{font:600 9.5px/1 var(--sans);color:#3B342E;padding:3px 8px;background:#dcd6ce;border:1px solid #b9b1a7}
+.osprev:hover .mini{transform:translate(-2px,-2px);transition:transform .15s}
 </style>
 </head>
 <body id="top">
@@ -335,6 +354,7 @@ body.menu-open .nav-links a{padding:12px 14px}
       <a href="#usecases">Use cases</a>
       <a href="#work">Work</a>
       <a href="#world">World&nbsp;game</a>
+      <a href="#os">RaviOS</a>
       <a href="#faq">FAQ</a>
       <a href="classic.html">Original&nbsp;↗</a>
     </div>
@@ -622,6 +642,34 @@ body.menu-open .nav-links a{padding:12px 14px}
     </a>
   </div>
 </section>
+<!-- ===================== RAVIOS ===================== -->
+<section class="section world os" id="os">
+  <div class="world-grid">
+    <a class="osprev reveal" href="os.html" aria-label="Boot RaviOS, the desktop-style portfolio">
+      <div class="ico" aria-hidden="true"><span>👤</span><span>📁</span><span>⌨️</span><span>✉️</span></div>
+      <div class="mini">
+        <div class="bar">📁 Projects <i></i></div>
+        <div class="c">ATS&nbsp;Killer <b>● LIVE</b><br>api-sentinel <b>● LIVE</b><br>&gt; both shipped to prod_</div>
+      </div>
+      <div class="bar2"><span class="st"><b></b>Start</span><span class="tb">Projects</span><span class="tb">Terminal</span></div>
+    </a>
+    <div class="reveal">
+      <div class="eyebrow">RaviOS · desktop mode</div>
+      <h2>Or boot my portfolio as a <span style="color:#FF8593">retro desktop OS.</span></h2>
+      <p class="lead">A tiny operating system in the browser — drag the windows, open my projects, poke around a real terminal. Same story as this page, rebuilt as a 90s desktop from scratch (no libraries).</p>
+      <ul class="checks">
+        <li>Draggable windows for About, Projects &amp; Contact</li>
+        <li>A working terminal — try <b>help</b>, <b>projects</b>, <b>whoami</b></li>
+        <li>Start menu, taskbar, live clock &amp; a CRT screen effect</li>
+        <li>Boot sequence, desktop icons, all with my real data</li>
+      </ul>
+      <div class="world-actions">
+        <a class="btn btn-primary" href="os.html">Boot RaviOS <span class="arrow">→</span></a>
+        <a class="btn btn-ghost" href="#work">Prefer to read? See the work ↑</a>
+      </div>
+    </div>
+  </div>
+</section>
 <!-- ===================== USE CASES ===================== -->
 <section class="section" id="usecases" style="background:var(--bg-2)">
   <div class="section-head reveal">
@@ -782,6 +830,7 @@ body.menu-open .nav-links a{padding:12px 14px}
     <div class="foot-col">
       <h5>Explore</h5>
       <a href="world.html">World game</a>
+      <a href="os.html">RaviOS desktop</a>
       <a href="classic.html">Original site</a>
       <a href="lab.html">Lab</a>
       <a href="#top">Back to top</a>
