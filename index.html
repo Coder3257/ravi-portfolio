@@ -298,6 +298,30 @@ body.menu-open .nav-links a{padding:12px 14px}
 .step .subs span{font:600 11px/1 var(--mono);border:1px solid var(--line);border-radius:999px;padding:7px 11px;color:var(--ink-2);background:#fff}
 @media(max-width:960px){.comp-grid{grid-template-columns:1fr;gap:36px}.routine-grid{grid-template-columns:1fr}.uc-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.uc-grid{grid-template-columns:1fr}}
+/* world game */
+.world{background:var(--ink)}
+.world .eyebrow{color:#FF8593}
+.world h2{color:#fff;font-size:clamp(30px,4vw,46px);margin-top:14px}
+.world .lead{color:#B8ADA4;margin-top:16px;max-width:48ch}
+.world-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center;max-width:var(--wrap);margin:0 auto;padding:0 24px}
+.world .checks{margin-top:24px}
+.world .checks li{color:#E7DDD5}
+.world-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.world .btn-primary{background:#fff;color:var(--ink);box-shadow:0 12px 30px -12px rgba(0,0,0,.5)}
+.world .btn-primary:hover{background:#F3ECE6;color:var(--ink)}
+.world .btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
+.world .btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.1)}
+.map{display:block;position:relative;aspect-ratio:1/.8;border-radius:var(--r-lg);border:1px solid rgba(255,255,255,.14);overflow:hidden;
+  background:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px) 0 0/34px 34px,
+    linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px) 0 0/34px 34px,
+    radial-gradient(120% 90% at 50% 0,#251d2b,#141019);box-shadow:inset 0 0 90px rgba(0,0,0,.55)}
+.map .z{position:absolute;transform:translate(-50%,-50%);font:600 11px/1 var(--mono);
+  padding:8px 11px;border-radius:999px;background:rgba(255,255,255,.96);color:#191512;white-space:nowrap;box-shadow:0 8px 20px -8px rgba(0,0,0,.6)}
+.map .z b{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:7px;vertical-align:middle}
+.map .car{position:absolute;top:64%;left:50%;font-size:30px;transform:translate(-50%,-50%);filter:drop-shadow(0 6px 10px rgba(0,0,0,.55));animation:cardrive 9s ease-in-out infinite}
+@keyframes cardrive{0%,100%{top:64%;left:50%}25%{top:40%;left:28%}50%{top:28%;left:66%}75%{top:56%;left:72%}}
+@media(max-width:960px){.world-grid{grid-template-columns:1fr;gap:36px}}
+@media(prefers-reduced-motion:reduce){.map .car{animation:none}}
 </style>
 </head>
 <body id="top">
@@ -310,6 +334,7 @@ body.menu-open .nav-links a{padding:12px 14px}
       <a href="#do">What I do</a>
       <a href="#usecases">Use cases</a>
       <a href="#work">Work</a>
+      <a href="#world">World&nbsp;game</a>
       <a href="#faq">FAQ</a>
       <a href="classic.html">Original&nbsp;↗</a>
     </div>
@@ -570,6 +595,33 @@ body.menu-open .nav-links a{padding:12px 14px}
     </div>
   </div>
 </section>
+<!-- ===================== WORLD GAME ===================== -->
+<section class="section world" id="world">
+  <div class="world-grid">
+    <div class="reveal">
+      <div class="eyebrow">World game · interactive</div>
+      <h2>Or take the wheel and <span style="color:#FF8593">drive through my work.</span></h2>
+      <p class="lead">Same portfolio, no scrolling. Steer a little 3D car around a world and roll up to each project, my story, or a way to reach me — built from scratch with Three.js.</p>
+      <ul class="checks">
+        <li>Drive up to ATS Killer &amp; api-sentinel to open them</li>
+        <li>Day / night toggle with working head- &amp; tail-lights</li>
+        <li>Boost pads, launch ramps, ring gates &amp; knockable props</li>
+        <li>WASD / arrow keys, or an on-screen pad on mobile</li>
+      </ul>
+      <div class="world-actions">
+        <a class="btn btn-primary" href="world.html">Enter the world <span class="arrow">→</span></a>
+        <a class="btn btn-ghost" href="classic.html">Prefer to read? Classic site ↗</a>
+      </div>
+    </div>
+    <a class="map reveal" href="world.html" aria-label="Enter the 3D world game">
+      <div class="z" style="top:15%;left:50%"><b style="background:#2FA36B"></b>About</div>
+      <div class="z" style="top:48%;left:82%"><b style="background:#3B6FE0"></b>api-sentinel</div>
+      <div class="z" style="top:83%;left:46%"><b style="background:#E8394C"></b>ATS Killer</div>
+      <div class="z" style="top:48%;left:15%"><b style="background:#E8A33D"></b>Contact</div>
+      <div class="car" aria-hidden="true">🚗</div>
+    </a>
+  </div>
+</section>
 <!-- ===================== USE CASES ===================== -->
 <section class="section" id="usecases" style="background:var(--bg-2)">
   <div class="section-head reveal">
@@ -729,6 +781,7 @@ body.menu-open .nav-links a{padding:12px 14px}
     </div>
     <div class="foot-col">
       <h5>Explore</h5>
+      <a href="world.html">World game</a>
       <a href="classic.html">Original site</a>
       <a href="lab.html">Lab</a>
       <a href="#top">Back to top</a>
